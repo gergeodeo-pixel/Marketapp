@@ -67,8 +67,7 @@ button:active{
     border:1px solid var(--border);
 }
 
-input,
-textarea{
+input,textarea{
     width:100%;
     padding:13px;
     border-radius:11px;
@@ -84,8 +83,7 @@ textarea{
     resize:vertical;
 }
 
-input:focus,
-textarea:focus{
+input:focus,textarea:focus{
     border-color:var(--text);
 }
 
@@ -95,8 +93,6 @@ label{
     font-weight:bold;
     margin-bottom:7px;
 }
-
-/* AUTH */
 
 .auth{
     position:fixed;
@@ -166,8 +162,6 @@ label{
     font-size:13px;
 }
 
-/* HEADER */
-
 header{
     position:sticky;
     top:0;
@@ -207,8 +201,6 @@ nav button{
     white-space:nowrap;
     padding:9px 12px;
 }
-
-/* MAIN */
 
 main{
     max-width:1100px;
@@ -267,8 +259,6 @@ main{
     margin-top:20px;
 }
 
-/* GOAL */
-
 .progress{
     height:13px;
     background:var(--border);
@@ -291,8 +281,6 @@ main{
     font-size:12px;
     margin-top:8px;
 }
-
-/* CALENDAR */
 
 .calendarTop{
     display:flex;
@@ -377,8 +365,6 @@ main{
     font-size:13px;
 }
 
-/* TASKS */
-
 .taskList{
     margin-top:12px;
 }
@@ -430,8 +416,6 @@ main{
     flex:none;
 }
 
-/* DAILY PROGRESS */
-
 .dailyProgress{
     background:var(--card);
     border:1px solid var(--border);
@@ -446,8 +430,6 @@ main{
     font-size:13px;
     color:var(--muted);
 }
-
-/* NOTES */
 
 .notesArea{
     min-height:400px;
@@ -465,8 +447,6 @@ main{
 .saveMessage.show{
     opacity:1;
 }
-
-/* ANALYTICS */
 
 .liveBox{
     background:var(--card);
@@ -509,8 +489,6 @@ main{
     margin-top:15px;
     position:relative;
 }
-
-/* MODAL */
 
 .modal{
     position:fixed;
@@ -584,8 +562,6 @@ main{
     border-radius:14px;
     padding:15px;
 }
-
-/* MOBILE */
 
 @media(max-width:650px){
 
@@ -666,482 +642,306 @@ main{
 
 <body>
 
-<!-- ACCOUNT -->
-
 <div class="auth" id="authScreen">
 
-    <div class="authCard">
+<div class="authCard">
 
-        <div class="authLogo">💰</div>
+<div class="authLogo">💰</div>
 
-        <h1>Business Manager</h1>
+<h1>Business Manager</h1>
 
-        <p>
-            Create your username and manage your business plans,
-            tasks, goals and income.
-        </p>
+<p>
+Create your username and manage your business plans,
+tasks, goals and income.
+</p>
 
-        <div class="tabs">
+<div class="tabs">
 
-            <button
-                id="continueTab"
-                class="active"
-                onclick="switchAuth('continue')"
-            >
-                Continue
-            </button>
+<button
+id="continueTab"
+class="active"
+onclick="switchAuth('continue')">
+Continue
+</button>
 
-            <button
-                id="newTab"
-                onclick="switchAuth('new')"
-            >
-                New Account
-            </button>
-
-        </div>
-
-        <div
-            class="error"
-            id="authError"
-        ></div>
-
-        <div id="continueForm">
-
-            <div class="field">
-
-                <label>Username</label>
-
-                <input
-                    id="continueUsername"
-                    maxlength="30"
-                    placeholder="Enter username"
-                    autocomplete="off"
-                >
-
-            </div>
-
-            <button
-                style="width:100%"
-                onclick="continueAccount()"
-            >
-                Continue
-            </button>
-
-        </div>
-
-        <div
-            id="newForm"
-            style="display:none"
-        >
-
-            <div class="field">
-
-                <label>Choose a username</label>
-
-                <input
-                    id="newUsername"
-                    maxlength="30"
-                    placeholder="Example: mybusiness"
-                    autocomplete="off"
-                >
-
-            </div>
-
-            <button
-                style="width:100%"
-                onclick="createAccount()"
-            >
-                Create Account
-            </button>
-
-        </div>
-
-    </div>
+<button
+id="newTab"
+onclick="switchAuth('new')">
+New Account
+</button>
 
 </div>
 
+<div class="error" id="authError"></div>
 
-<!-- HEADER -->
+<div id="continueForm">
+
+<label>Username</label>
+
+<input
+id="continueUsername"
+maxlength="30"
+placeholder="Enter username"
+autocomplete="off">
+
+<button
+style="width:100%;margin-top:10px"
+onclick="continueAccount()">
+Continue
+</button>
+
+</div>
+
+<div id="newForm" style="display:none">
+
+<label>Choose a username</label>
+
+<input
+id="newUsername"
+maxlength="30"
+placeholder="Example: mybusiness"
+autocomplete="off">
+
+<button
+style="width:100%;margin-top:10px"
+onclick="createAccount()">
+Create Account
+</button>
+
+</div>
+
+</div>
+</div>
 
 <header>
 
 <div class="headerInner">
 
-    <div class="logo">
-        💰 Business Manager
-    </div>
+<div class="logo">
+💰 Business Manager
+</div>
 
-    <div
-        class="username"
-        id="headerUsername"
-    ></div>
+<div class="username" id="headerUsername"></div>
 
-    <nav>
+<nav>
 
-        <button onclick="showPage('home')">
-            🏠 Home
-        </button>
+<button onclick="showPage('home')">
+🏠 Home
+</button>
 
-        <button onclick="showPage('calendar')">
-            🗓️ Calendar
-        </button>
+<button onclick="showPage('calendar')">
+🗓️ Calendar
+</button>
 
-        <button onclick="showPage('notes')">
-            📝 Notes
-        </button>
+<button onclick="showPage('notes')">
+📝 Notes
+</button>
 
-        <button
-            id="analyticsButton"
-            style="display:none"
-            onclick="showPage('analytics')"
-        >
-            📊 Analytics
-        </button>
+<button
+id="analyticsButton"
+style="display:none"
+onclick="showPage('analytics')">
+📊 Analytics
+</button>
 
-        <button
-            class="secondary"
-            onclick="toggleDark()"
-        >
-            🌙
-        </button>
+<button
+class="secondary"
+onclick="toggleDark()">
+🌙
+</button>
 
-        <button
-            class="secondary"
-            onclick="logout()"
-        >
-            Log Out
-        </button>
+<button
+class="secondary"
+onclick="logout()">
+Log Out
+</button>
 
-    </nav>
+</nav>
 
 </div>
 
 </header>
 
-
 <main>
 
-<!-- HOME -->
+<section id="home" class="page active">
 
-<section
-    id="home"
-    class="page active"
->
+<div class="title">
+Business Overview
+</div>
 
-    <div class="title">
-        Business Overview
-    </div>
+<div class="subtitle">
+Your money, goals and productivity in one place.
+</div>
 
-    <div class="subtitle">
-        Your money, goals and productivity in one place.
-    </div>
+<div class="cards">
 
+<div class="card">
+<div class="cardTitle">💰 Planned Income</div>
+<div class="big" id="plannedMoney">$0.00</div>
+</div>
 
-    <div class="cards">
+<div class="card">
+<div class="cardTitle">💵 Actual Income</div>
+<div class="big green" id="actualMoney">$0.00</div>
+</div>
 
-        <div class="card">
+<div class="card">
+<div class="cardTitle">🎯 Business Goal</div>
+<div class="big" id="goalMoney">$0.00</div>
+</div>
 
-            <div class="cardTitle">
-                💰 Planned Income
-            </div>
+<div class="card">
+<div class="cardTitle">💸 Remaining</div>
+<div class="big" id="remainingMoney">$0.00</div>
+</div>
 
-            <div
-                class="big"
-                id="plannedMoney"
-            >
-                $0.00
-            </div>
+</div>
 
-        </div>
+<div class="card section">
 
+<h2>🎯 Business Goal</h2>
 
-        <div class="card">
+<div style="margin-top:16px">
 
-            <div class="cardTitle">
-                💵 Actual Income
-            </div>
+<label>
+How much money do you want to make?
+</label>
 
-            <div
-                class="big green"
-                id="actualMoney"
-            >
-                $0.00
-            </div>
+<input
+id="goalInput"
+type="number"
+min="0"
+step="0.01"
+placeholder="1000">
 
-        </div>
+</div>
 
+<button
+style="margin-top:10px"
+onclick="saveGoal()">
+Save Goal
+</button>
 
-        <div class="card">
+<div class="progress">
 
-            <div class="cardTitle">
-                🎯 Business Goal
-            </div>
+<div
+class="progressBar"
+id="progressBar">
+</div>
 
-            <div
-                class="big"
-                id="goalMoney"
-            >
-                $0.00
-            </div>
+</div>
 
-        </div>
+<div class="goalInfo">
 
+<span id="goalPercent">
+0% complete
+</span>
 
-        <div class="card">
+<span id="goalMade">
+$0.00 made
+</span>
 
-            <div class="cardTitle">
-                💸 Remaining
-            </div>
+</div>
 
-            <div
-                class="big"
-                id="remainingMoney"
-            >
-                $0.00
-            </div>
+</div>
 
-        </div>
+<div class="card section">
 
-    </div>
+<h2>📈 Productivity</h2>
 
+<div class="productivityGrid">
 
-    <!-- GOAL -->
+<div class="productivityItem">
+<div class="statLabel">Tasks Completed</div>
+<div class="statValue" id="tasksCompleted">0</div>
+</div>
 
-    <div class="card section">
+<div class="productivityItem">
+<div class="statLabel">Tasks Remaining</div>
+<div class="statValue" id="tasksRemaining">0</div>
+</div>
 
-        <h2>
-            🎯 Business Goal
-        </h2>
-
-        <div
-            class="field"
-            style="margin-top:16px"
-        >
-
-            <label>
-                How much money do you want to make?
-            </label>
-
-            <input
-                id="goalInput"
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="1000"
-            >
-
-        </div>
-
-        <button onclick="saveGoal()">
-            Save Goal
-        </button>
-
-        <div class="progress">
-
-            <div
-                class="progressBar"
-                id="progressBar"
-            ></div>
-
-        </div>
-
-        <div class="goalInfo">
-
-            <span id="goalPercent">
-                0% complete
-            </span>
-
-            <span id="goalMade">
-                $0.00 made
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <!-- PRODUCTIVITY -->
-
-    <div class="card section">
-
-        <h2>
-            📈 Productivity
-        </h2>
-
-        <div class="productivityGrid">
-
-            <div class="productivityItem">
-
-                <div class="statLabel">
-                    Tasks Completed
-                </div>
-
-                <div
-                    class="statValue"
-                    id="tasksCompleted"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="productivityItem">
-
-                <div class="statLabel">
-                    Tasks Remaining
-                </div>
-
-                <div
-                    class="statValue"
-                    id="tasksRemaining"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="productivityItem">
-
-                <div class="statLabel">
-                    Best Productivity Day
-                </div>
-
-                <div
-                    class="statValue"
-                    id="bestDay"
-                >
-                    None
-                </div>
-
-            </div>
-
-
-            <div class="productivityItem">
-
-                <div class="statLabel">
-                    Task Completion
-                </div>
-
-                <div
-                    class="statValue"
-                    id="taskCompletion"
-                >
-                    0%
-                </div>
-
-            </div>
-
-
-            <div class="productivityItem">
-
-                <div class="statLabel">
-                    Planned Income
-                </div>
-
-                <div
-                    class="statValue"
-                    id="productivityPlanned"
-                >
-                    $0
-                </div>
-
-            </div>
-
-
-            <div class="productivityItem">
-
-                <div class="statLabel">
-                    Actual Income
-                </div>
-
-                <div
-                    class="statValue green"
-                    id="productivityActual"
-                >
-                    $0
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+<div class="productivityItem">
+<div class="statLabel">Best Productivity Day</div>
+<div class="statValue" id="bestDay">None</div>
+</div>
+
+<div class="productivityItem">
+<div class="statLabel">Task Completion</div>
+<div class="statValue" id="taskCompletion">0%</div>
+</div>
+
+<div class="productivityItem">
+<div class="statLabel">Planned Income</div>
+<div class="statValue" id="productivityPlanned">$0</div>
+</div>
+
+<div class="productivityItem">
+<div class="statLabel">Actual Income</div>
+<div class="statValue green" id="productivityActual">$0</div>
+</div>
+
+</div>
+
+</div>
 
 </section>
 
+<section id="calendar" class="page">
 
-<!-- CALENDAR -->
+<div class="title">
+🗓️ Money Calendar
+</div>
 
-<section
-    id="calendar"
-    class="page"
->
+<div class="subtitle">
+Tap a date to plan your work, money and tasks.
+</div>
 
-    <div class="title">
-        🗓️ Money Calendar
-    </div>
+<div class="calendarTop">
 
-    <div class="subtitle">
-        Tap a date to plan your work, money and tasks.
-    </div>
+<button
+class="secondary"
+onclick="changeMonth(-1)">
+←
+</button>
 
+<div
+class="monthTitle"
+id="monthTitle">
+</div>
 
-    <div class="calendarTop">
+<button
+class="secondary"
+onclick="changeMonth(1)">
+→
+</button>
 
-        <button
-            class="secondary"
-            onclick="changeMonth(-1)"
-        >
-            ←
-        </button>
+</div>
 
-        <div
-            class="monthTitle"
-            id="monthTitle"
-        ></div>
-
-        <button
-            class="secondary"
-            onclick="changeMonth(1)"
-        >
-            →
-        </button>
-
-    </div>
-
-
-    <div
-        class="calendar"
-        id="calendarGrid"
-    ></div>
+<div
+class="calendar"
+id="calendarGrid">
+</div>
 
 </section>
 
+<section id="notes" class="page">
 
-<!-- NOTES -->
+<div class="title">
+📝 General Notepad
+</div>
 
-<section
-    id="notes"
-    class="page"
->
+<div class="subtitle">
+Stuff that isn't tied to a particular day.
+</div>
 
-    <div class="title">
-        📝 General Notepad
-    </div>
+<div class="card">
 
-    <div class="subtitle">
-        Stuff that isn't tied to a particular day.
-    </div>
-
-
-    <div class="card">
-
-        <textarea
-            id="generalNotes"
-            class="notesArea"
-            placeholder="💡 Business ideas
+<textarea
+id="generalNotes"
+class="notesArea"
+placeholder="💡 Business ideas
 
 📦 Products to make
 
@@ -1151,2826 +951,2435 @@ main{
 
 💰 Things to buy
 
-🧠 Random ideas before they disappear into the void..."
-        ></textarea>
+🧠 Random ideas..."></textarea>
 
+<div style="margin-top:12px">
 
-        <div style="margin-top:12px">
+<button onclick="saveGeneralNotes()">
+Save Notes
+</button>
 
-            <button onclick="saveGeneralNotes()">
-                Save Notes
-            </button>
+<span
+class="saveMessage"
+id="notesSaved">
+Saved ✓
+</span>
 
-            <span
-                class="saveMessage"
-                id="notesSaved"
-            >
-                Saved ✓
-            </span>
+</div>
 
-        </div>
-
-    </div>
+</div>
 
 </section>
 
+<section id="analytics" class="page">
 
-<!-- ANALYTICS -->
+<div class="title">
+📊 Website Analytics
+</div>
 
-<section
-    id="analytics"
-    class="page"
->
+<div class="subtitle">
+Anonymous website activity.
+</div>
 
-    <div class="title">
-        📊 Website Analytics
-    </div>
+<div class="liveBox">
 
-    <div class="subtitle">
-        Anonymous website activity.
-    </div>
+<div class="liveDot"></div>
 
+<div>
 
-    <div class="liveBox">
+<strong id="firebaseStatus">
+Connecting...
+</strong>
 
-        <div class="liveDot"></div>
+<div
+class="small"
+id="updatedTime">
+Waiting for data
+</div>
 
-        <div>
+</div>
 
-            <strong id="firebaseStatus">
-                Connecting...
-            </strong>
+</div>
 
-            <div
-                class="small"
-                id="updatedTime"
-            >
-                Waiting for data
-            </div>
+<div class="cards">
 
-        </div>
+<div class="card">
 
-    </div>
+<div class="cardTitle">
+🔴 Concurrent Users
+</div>
 
+<div
+class="big"
+id="currentOnline">
+0
+</div>
 
-    <div class="cards">
+</div>
 
-        <div class="card">
+<div class="card">
 
-            <div class="cardTitle">
-                🔴 Concurrent Users
-            </div>
+<div class="cardTitle">
+👥 Users This Week
+</div>
 
-            <div
-                class="big"
-                id="currentOnline"
-            >
-                0
-            </div>
+<div
+class="big"
+id="usersThisWeek">
+0
+</div>
 
-        </div>
+</div>
 
+<div class="card">
 
-        <div class="card">
+<div class="cardTitle">
+🔄 Returned From Last Week
+</div>
 
-            <div class="cardTitle">
-                👥 Users This Week
-            </div>
+<div
+class="big"
+id="returnedUsers">
+0
+</div>
 
-            <div
-                class="big"
-                id="usersThisWeek"
-            >
-                0
-            </div>
+</div>
 
-        </div>
+<div class="card">
 
+<div class="cardTitle">
+📈 Weekly Retention
+</div>
 
-        <div class="card">
+<div
+class="big"
+id="retentionRate">
+0%
+</div>
 
-            <div class="cardTitle">
-                🔄 Returned From Last Week
-            </div>
+</div>
 
-            <div
-                class="big"
-                id="returnedUsers"
-            >
-                0
-            </div>
+</div>
 
-        </div>
+<div class="chart">
 
+<h2>
+Concurrent Users
+</h2>
 
-        <div class="card">
+<div class="small">
+Maximum concurrent users recorded each day.
+</div>
 
-            <div class="cardTitle">
-                📈 Weekly Retention
-            </div>
+<div class="chartBox">
+<canvas id="concurrentChart"></canvas>
+</div>
 
-            <div
-                class="big"
-                id="retentionRate"
-            >
-                0%
-            </div>
+</div>
 
-        </div>
+<div class="chart">
 
-    </div>
+<h2>
+Users During The Week
+</h2>
 
+<div class="small">
+Unique active users for each day.
+</div>
 
-    <div class="chart">
+<div class="chartBox">
+<canvas id="weeklyChart"></canvas>
+</div>
 
-        <h2>
-            Concurrent Users
-        </h2>
-
-        <div class="small">
-            Maximum concurrent users recorded each day.
-        </div>
-
-        <div class="chartBox">
-
-            <canvas
-                id="concurrentChart"
-            ></canvas>
-
-        </div>
-
-    </div>
-
-
-    <div class="chart">
-
-        <h2>
-            Users During The Week
-        </h2>
-
-        <div class="small">
-            Unique active users for each day.
-        </div>
-
-        <div class="chartBox">
-
-            <canvas
-                id="weeklyChart"
-            ></canvas>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 </main>
 
-
-<!-- DAILY PLANNER MODAL -->
-
-<div
-    class="modal"
-    id="dateModal"
->
+<div class="modal" id="dateModal">
 
 <div class="modalCard">
 
-    <button
-        class="close"
-        onclick="closeDateModal()"
-    >
-        ×
-    </button>
+<button
+class="close"
+onclick="closeDateModal()">
+×
+</button>
 
+<h2
+id="selectedDateTitle"
+style="margin-bottom:18px">
+Daily Planner
+</h2>
 
-    <h2
-        id="selectedDateTitle"
-        style="margin-bottom:18px"
-    >
-        Daily Planner
-    </h2>
+<label>
+💰 Expected income
+</label>
 
+<input
+id="expectedInput"
+type="number"
+min="0"
+step="0.01"
+placeholder="0">
 
-    <!-- MONEY -->
+<div style="margin-top:12px">
 
-    <div class="field">
+<label>
+💵 Actual income
+</label>
 
-        <label>
-            💰 Expected income
-        </label>
+<input
+id="actualInput"
+type="number"
+min="0"
+step="0.01"
+placeholder="0">
 
-        <input
-            id="expectedInput"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="0"
-        >
+</div>
 
-    </div>
+<div class="divider"></div>
 
+<h3>☑️ Tasks</h3>
 
-    <div class="field" style="margin-top:12px">
+<div
+class="small"
+style="margin-top:4px">
+Complete everything to get a ✅ on the calendar.
+</div>
 
-        <label>
-            💵 Actual income
-        </label>
+<div
+class="taskList"
+id="taskList">
+</div>
 
-        <input
-            id="actualInput"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="0"
-        >
+<div class="addTaskRow">
 
-    </div>
+<input
+id="newTaskInput"
+placeholder="Add a task..."
+autocomplete="off">
 
+<button onclick="addTask()">
++ Add
+</button>
 
-    <div class="divider"></div>
+</div>
 
+<div class="divider"></div>
 
-    <!-- TASKS -->
+<h3>📝 Daily Notes</h3>
 
-    <h3>
-        ☑️ Tasks
-    </h3>
+<textarea
+id="dailyNote"
+style="margin-top:10px"
+placeholder="What happened today?"></textarea>
 
+<div class="dailyProgress">
 
-    <div
-        class="small"
-        style="margin-top:4px"
-    >
-        Complete everything to get a ✅ on the calendar.
-    </div>
+<div class="progressText">
 
+<span>
+Daily Progress
+</span>
 
-    <div
-        class="taskList"
-        id="taskList"
-    ></div>
+<strong id="dailyTaskProgress">
+0/0
+</strong>
 
+</div>
 
-    <div class="addTaskRow">
+<div class="progress">
 
-        <input
-            id="newTaskInput"
-            placeholder="Add a task..."
-            autocomplete="off"
-        >
-
-        <button onclick="addTask()">
-            + Add
-        </button>
-
-    </div>
-
-
-    <!-- DAILY NOTE -->
-
-    <div class="divider"></div>
-
-
-    <h3>
-        📝 Daily Notes
-    </h3>
-
-
-    <textarea
-        id="dailyNote"
-        style="margin-top:10px"
-        placeholder="What happened today?"
-    ></textarea>
-
-
-    <!-- PROGRESS -->
-
-    <div class="dailyProgress">
-
-        <div class="progressText">
-
-            <span>
-                Daily Progress
-            </span>
-
-            <strong id="dailyTaskProgress">
-                0/0
-            </strong>
-
-        </div>
-
-        <div class="progress">
-
-            <div
-                class="progressBar"
-                id="dailyProgressBar"
-            ></div>
-
-        </div>
-
-    </div>
-
-
-    <div class="modalButtons">
-
-        <button onclick="saveDate()">
-            Save Day
-        </button>
-
-        <button
-            class="secondary"
-            onclick="clearDate()"
-        >
-            Clear Day
-        </button>
-
-    </div>
+<div
+class="progressBar"
+id="dailyProgressBar">
+</div>
 
 </div>
 
 </div>
 
+<div class="modalButtons">
+
+<button onclick="saveDate()">
+Save Day
+</button>
+
+<button
+class="secondary"
+onclick="clearDate()">
+Clear Day
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
 
 /* ==========================================================
-   FIREBASE
+ACCOUNT
 ========================================================== */
-
-const DATABASE_URL =
-    "https://app-1-2f56b-default-rtdb.firebaseio.com/";
-
-let database=null;
-
-try{
-
-    if(typeof firebase !== "undefined"){
-
-        firebase.initializeApp({
-            databaseURL:DATABASE_URL
-        });
-
-        database=firebase.database();
-
-    }
-
-}catch(error){
-
-    console.log(
-        "Firebase unavailable",
-        error
-    );
-
-}
-
-
-/* ==========================================================
-   ACCOUNT
-========================================================== */
-
-let currentUsername=
-    localStorage.getItem(
-        "business_current_username"
-    );
 
 const OWNER="cheezlove22";
 
+let currentUsername=
+localStorage.getItem(
+"business_current_username"
+);
+
+
+/* ==========================================================
+LOCAL DATA VARIABLES
+========================================================== */
+
+let moneyData={};
+let goal=0;
+
+
+/* ==========================================================
+CALENDAR VARIABLES
+========================================================== */
+
+let calendarDate=new Date();
+let selectedDate=null;
+
+
+/* ==========================================================
+FIREBASE VARIABLES
+========================================================== */
+
+const DATABASE_URL=
+"https://app-1-2f56b-default-rtdb.firebaseio.com/";
+
+let database=null;
+
+let visitorID=
+localStorage.getItem(
+"business_visitor_id"
+);
+
+let concurrentChart=null;
+let weeklyChart=null;
+
+
+/* ==========================================================
+USERNAME FUNCTIONS
+========================================================== */
 
 function cleanUsername(value){
 
-    return value
-        .trim()
-        .toLowerCase()
-        .replace(
-            /[^a-z0-9_-]/g,
-            ""
-        );
+return value
+.trim()
+.toLowerCase()
+.replace(/[^a-z0-9_-]/g,"");
 
 }
-
 
 function showAuthError(message){
 
-    const error=
-        document.getElementById(
-            "authError"
-        );
+const el=
+document.getElementById("authError");
 
-    error.textContent=message;
+el.textContent=message;
 
-    error.style.display=
-        message ? "block":"none";
+el.style.display=
+message ? "block":"none";
 
 }
-
 
 function switchAuth(mode){
 
-    showAuthError("");
+const isContinue=
+mode==="continue";
 
-    const continuing=
-        mode==="continue";
+showAuthError("");
 
+document.getElementById(
+"continueForm"
+).style.display=
+isContinue ? "block":"none";
 
-    document
-    .getElementById(
-        "continueForm"
-    )
-    .style.display=
-        continuing
-        ? "block"
-        : "none";
+document.getElementById(
+"newForm"
+).style.display=
+isContinue ? "none":"block";
 
+document.getElementById(
+"continueTab"
+).classList.toggle(
+"active",
+isContinue
+);
 
-    document
-    .getElementById(
-        "newForm"
-    )
-    .style.display=
-        continuing
-        ? "none"
-        : "block";
-
-
-    document
-    .getElementById(
-        "continueTab"
-    )
-    .classList
-    .toggle(
-        "active",
-        continuing
-    );
-
-
-    document
-    .getElementById(
-        "newTab"
-    )
-    .classList
-    .toggle(
-        "active",
-        !continuing
-    );
-
-}
-
-
-function createAccount(){
-
-    showAuthError("");
-
-    const name=
-        cleanUsername(
-            document
-            .getElementById(
-                "newUsername"
-            )
-            .value
-        );
-
-
-    if(name.length<3){
-
-        showAuthError(
-            "Username must be at least 3 characters."
-        );
-
-        return;
-
-    }
-
-
-    currentUsername=name;
-
-    localStorage.setItem(
-        "business_current_username",
-        currentUsername
-    );
-
-    startApp();
-
-}
-
-
-function continueAccount(){
-
-    showAuthError("");
-
-    const name=
-        cleanUsername(
-            document
-            .getElementById(
-                "continueUsername"
-            )
-            .value
-        );
-
-
-    if(name.length<3){
-
-        showAuthError(
-            "Enter a username."
-        );
-
-        return;
-
-    }
-
-
-    currentUsername=name;
-
-    localStorage.setItem(
-        "business_current_username",
-        currentUsername
-    );
-
-    startApp();
-
-}
-
-
-function logout(){
-
-    localStorage.removeItem(
-        "business_current_username"
-    );
-
-    location.reload();
+document.getElementById(
+"newTab"
+).classList.toggle(
+"active",
+!isContinue
+);
 
 }
 
 
 /* ==========================================================
-   LOCAL DATA
+START APP
+========================================================== */
+
+/*
+IMPORTANT:
+Use window.startApp so inline onclick handlers
+and different mobile preview environments can
+always find the function.
+*/
+
+window.startApp=function(){
+
+const authScreen=
+document.getElementById("authScreen");
+
+if(authScreen){
+
+authScreen.classList.add("hidden");
+
+}
+
+const headerUsername=
+document.getElementById("headerUsername");
+
+if(headerUsername){
+
+headerUsername.textContent=
+"@"+currentUsername;
+
+}
+
+const analyticsButton=
+document.getElementById("analyticsButton");
+
+if(analyticsButton){
+
+if(
+currentUsername &&
+currentUsername.toLowerCase()===OWNER
+){
+
+analyticsButton.style.display="block";
+
+}else{
+
+analyticsButton.style.display="none";
+
+}
+
+}
+
+loadMoneyData();
+loadGeneralNotes();
+updateHome();
+renderCalendar();
+setupAnalytics();
+
+};
+
+
+/* ==========================================================
+ACCOUNT CREATION
+========================================================== */
+
+function createAccount(){
+
+const name=
+cleanUsername(
+document.getElementById(
+"newUsername"
+).value
+);
+
+if(name.length<3){
+
+showAuthError(
+"Username must be at least 3 characters."
+);
+
+return;
+
+}
+
+currentUsername=name;
+
+localStorage.setItem(
+"business_current_username",
+name
+);
+
+window.startApp();
+
+}
+
+function continueAccount(){
+
+const name=
+cleanUsername(
+document.getElementById(
+"continueUsername"
+).value
+);
+
+if(name.length<3){
+
+showAuthError(
+"Enter a username."
+);
+
+return;
+
+}
+
+currentUsername=name;
+
+localStorage.setItem(
+"business_current_username",
+name
+);
+
+window.startApp();
+
+}
+
+function logout(){
+
+localStorage.removeItem(
+"business_current_username"
+);
+
+location.reload();
+
+}
+
+
+/* ==========================================================
+LOCAL DATA
 ========================================================== */
 
 function accountKey(){
 
-    return(
-        "business_data_"+
-        currentUsername
-    );
+return "business_data_"+currentUsername;
 
 }
-
 
 function goalKey(){
 
-    return(
-        "business_goal_"+
-        currentUsername
-    );
+return "business_goal_"+currentUsername;
 
 }
-
 
 function notesKey(){
 
-    return(
-        "business_notes_"+
-        currentUsername
-    );
+return "business_notes_"+currentUsername;
 
 }
-
-
-let moneyData={};
-
-let goal=0;
-
 
 function loadMoneyData(){
 
-    try{
+try{
 
-        moneyData=
-            JSON.parse(
-                localStorage.getItem(
-                    accountKey()
-                ) || "{}"
-            );
+moneyData=
+JSON.parse(
+localStorage.getItem(
+accountKey()
+)||"{}"
+);
 
-    }catch(error){
+if(
+!moneyData ||
+typeof moneyData!=="object"
+){
 
-        moneyData={};
-
-    }
-
-
-    goal=
-        Number(
-            localStorage.getItem(
-                goalKey()
-            ) || 0
-        );
+moneyData={};
 
 }
 
+}catch(e){
+
+moneyData={};
+
+}
+
+goal=
+Number(
+localStorage.getItem(
+goalKey()
+)||0
+);
+
+}
 
 function saveMoneyData(){
 
-    localStorage.setItem(
-        accountKey(),
-        JSON.stringify(
-            moneyData
-        )
-    );
+localStorage.setItem(
+accountKey(),
+JSON.stringify(moneyData)
+);
 
-    localStorage.setItem(
-        goalKey(),
-        goal
-    );
+localStorage.setItem(
+goalKey(),
+String(goal)
+);
 
 }
 
 
 /* ==========================================================
-   START
-========================================================== */
-
-function startApp(){
-
-    document
-    .getElementById(
-        "authScreen"
-    )
-    .classList
-    .add("hidden");
-
-
-    document
-    .getElementById(
-        "headerUsername"
-    )
-    .textContent=
-        "@"+currentUsername;
-
-
-    if(
-        currentUsername.toLowerCase()===
-        OWNER
-    ){
-
-        document
-        .getElementById(
-            "analyticsButton"
-        )
-        .style.display="block";
-
-    }
-
-
-    loadMoneyData();
-
-    loadGeneralNotes();
-
-    updateHome();
-
-    renderCalendar();
-
-    setupAnalytics();
-
-}
-
-
-if(currentUsername){
-
-    startApp();
-
-}
-
-
-/* ==========================================================
-   MONEY
+UTILITIES
 ========================================================== */
 
 function money(value){
 
-    return(
-        "$"+
-        Number(value||0)
-        .toLocaleString(
-            "en-US",
-            {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
-            }
-        )
-    );
+return "$"+
+Number(value||0)
+.toLocaleString(
+"en-US",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+);
+
+}
+
+function dateKey(date){
+
+return date.getFullYear()+
+"-"+
+String(
+date.getMonth()+1
+).padStart(2,"0")+
+"-"+
+String(
+date.getDate()
+).padStart(2,"0");
+
+}
+
+function formatShortDate(key){
+
+return new Date(
+key+"T12:00:00"
+).toLocaleDateString(
+"en-US",
+{
+month:"short",
+day:"numeric"
+}
+);
 
 }
 
 
 /* ==========================================================
-   HOME
+HOME
 ========================================================== */
 
 function updateHome(){
 
-    loadMoneyData();
+loadMoneyData();
 
+let planned=0;
+let actual=0;
+let completed=0;
+let remaining=0;
+let totalTasks=0;
 
-    let planned=0;
-    let actual=0;
-    let completed=0;
-    let remaining=0;
-    let totalTasks=0;
+let bestDate=null;
+let bestCompleted=-1;
 
+Object.entries(moneyData)
+.forEach(([date,data])=>{
 
-    let bestDate=null;
-    let bestCompleted=-1;
+if(!data)return;
 
+planned+=Number(data.expected||0);
+actual+=Number(data.actual||0);
 
-    Object.entries(
-        moneyData
-    )
-    .forEach(
-        ([date,data])=>{
+const tasks=
+Array.isArray(data.tasks)
+?data.tasks
+:[];
 
-            if(!data)
-                return;
+tasks.forEach(task=>{
 
+totalTasks++;
 
-            planned+=
-                Number(
-                    data.expected||0
-                );
+if(task.done){
 
+completed++;
 
-            actual+=
-                Number(
-                    data.actual||0
-                );
+}else{
 
-
-            const tasks=
-                Array.isArray(data.tasks)
-                ? data.tasks
-                : [];
-
-
-            tasks.forEach(task=>{
-
-                totalTasks++;
-
-
-                if(task.done){
-
-                    completed++;
-
-                }else{
-
-                    remaining++;
-
-                }
-
-            });
-
-
-            const dayCompleted=
-                tasks.filter(
-                    task=>task.done
-                ).length;
-
-
-            if(
-                dayCompleted>bestCompleted &&
-                tasks.length>0
-            ){
-
-                bestCompleted=
-                    dayCompleted;
-
-                bestDate=date;
-
-            }
-
-        }
-    );
-
-
-    document
-    .getElementById(
-        "plannedMoney"
-    )
-    .textContent=
-        money(planned);
-
-
-    document
-    .getElementById(
-        "actualMoney"
-    )
-    .textContent=
-        money(actual);
-
-
-    document
-    .getElementById(
-        "goalMoney"
-    )
-    .textContent=
-        money(goal);
-
-
-    document
-    .getElementById(
-        "remainingMoney"
-    )
-    .textContent=
-        money(
-            Math.max(
-                0,
-                goal-actual
-            )
-        );
-
-
-    document
-    .getElementById(
-        "goalInput"
-    )
-    .value=
-        goal || "";
-
-
-    const goalPercent=
-        goal>0
-        ? Math.min(
-            100,
-            actual/goal*100
-        )
-        : 0;
-
-
-    document
-    .getElementById(
-        "progressBar"
-    )
-    .style.width=
-        goalPercent+"%";
-
-
-    document
-    .getElementById(
-        "goalPercent"
-    )
-    .textContent=
-        goalPercent.toFixed(1)+
-        "% complete";
-
-
-    document
-    .getElementById(
-        "goalMade"
-    )
-    .textContent=
-        money(actual)+" made";
-
-
-    document
-    .getElementById(
-        "tasksCompleted"
-    )
-    .textContent=
-        completed;
-
-
-    document
-    .getElementById(
-        "tasksRemaining"
-    )
-    .textContent=
-        remaining;
-
-
-    const taskPercent=
-        totalTasks>0
-        ? completed/
-          totalTasks*
-          100
-        : 0;
-
-
-    document
-    .getElementById(
-        "taskCompletion"
-    )
-    .textContent=
-        taskPercent.toFixed(0)+"%";
-
-
-    document
-    .getElementById(
-        "bestDay"
-    )
-    .textContent=
-        bestDate
-        ? formatShortDate(bestDate)
-        : "None";
-
-
-    document
-    .getElementById(
-        "productivityPlanned"
-    )
-    .textContent=
-        money(planned);
-
-
-    document
-    .getElementById(
-        "productivityActual"
-    )
-    .textContent=
-        money(actual);
+remaining++;
 
 }
 
+});
 
-function formatShortDate(key){
+const dayCompleted=
+tasks.filter(
+task=>task.done
+).length;
 
-    return new Date(
-        key+"T12:00:00"
-    ).toLocaleDateString(
-        "en-US",
-        {
-            month:"short",
-            day:"numeric"
-        }
-    );
+if(
+tasks.length>0 &&
+dayCompleted>bestCompleted
+){
+
+bestCompleted=dayCompleted;
+bestDate=date;
 
 }
 
+});
+
+document.getElementById(
+"plannedMoney"
+).textContent=money(planned);
+
+document.getElementById(
+"actualMoney"
+).textContent=money(actual);
+
+document.getElementById(
+"goalMoney"
+).textContent=money(goal);
+
+document.getElementById(
+"remainingMoney"
+).textContent=
+money(
+Math.max(0,goal-actual)
+);
+
+document.getElementById(
+"goalInput"
+).value=
+goal || "";
+
+const goalPercent=
+goal>0
+?Math.min(100,actual/goal*100)
+:0;
+
+document.getElementById(
+"progressBar"
+).style.width=
+goalPercent+"%";
+
+document.getElementById(
+"goalPercent"
+).textContent=
+goalPercent.toFixed(1)+
+"% complete";
+
+document.getElementById(
+"goalMade"
+).textContent=
+money(actual)+" made";
+
+document.getElementById(
+"tasksCompleted"
+).textContent=completed;
+
+document.getElementById(
+"tasksRemaining"
+).textContent=remaining;
+
+document.getElementById(
+"taskCompletion"
+).textContent=
+totalTasks>0
+?Math.round(
+completed/totalTasks*100
+)+"%"
+:"0%";
+
+document.getElementById(
+"bestDay"
+).textContent=
+bestDate
+?formatShortDate(bestDate)
+:"None";
+
+document.getElementById(
+"productivityPlanned"
+).textContent=
+money(planned);
+
+document.getElementById(
+"productivityActual"
+).textContent=
+money(actual);
+
+}
 
 function saveGoal(){
 
-    goal=
-        Number(
-            document
-            .getElementById(
-                "goalInput"
-            )
-            .value || 0
-        );
+let value=
+Number(
+document.getElementById(
+"goalInput"
+).value||0
+);
 
+if(
+!Number.isFinite(value) ||
+value<0
+){
 
-    if(goal<0 || !Number.isFinite(goal)){
+value=0;
 
-        goal=0;
+}
 
-    }
+goal=value;
 
-
-    saveMoneyData();
-
-    updateHome();
+saveMoneyData();
+updateHome();
 
 }
 
 
 /* ==========================================================
-   NAVIGATION
+NAVIGATION
 ========================================================== */
 
 function showPage(name){
 
-    if(
-        name==="analytics" &&
-        (
-            !currentUsername ||
-            currentUsername.toLowerCase()!==OWNER
-        )
-    ){
+if(
+name==="analytics" &&
+(
+!currentUsername ||
+currentUsername.toLowerCase()!==OWNER
+)
+){
 
-        name="home";
+name="home";
 
-    }
+}
 
+document
+.querySelectorAll(".page")
+.forEach(page=>{
+page.classList.remove("active");
+});
 
-    document
-    .querySelectorAll(".page")
-    .forEach(section=>{
+const page=
+document.getElementById(name);
 
-        section.classList.remove(
-            "active"
-        );
+if(page){
 
-    });
+page.classList.add("active");
 
+}
 
-    const selected=
-        document.getElementById(name);
+if(name==="home"){
 
+updateHome();
 
-    if(selected){
+}
 
-        selected.classList.add(
-            "active"
-        );
+if(name==="calendar"){
 
-    }
+renderCalendar();
 
+}
 
-    if(name==="home"){
+if(name==="notes"){
 
-        updateHome();
+loadGeneralNotes();
 
-    }
+}
 
+if(name==="analytics"){
 
-    if(name==="calendar"){
+loadAnalytics();
 
-        loadMoneyData();
-
-        renderCalendar();
-
-    }
-
-
-    if(name==="notes"){
-
-        loadGeneralNotes();
-
-    }
-
-
-    if(name==="analytics"){
-
-        loadAnalytics();
-
-    }
+}
 
 }
 
 
 /* ==========================================================
-   CALENDAR
+CALENDAR
 ========================================================== */
-
-let calendarDate=
-    new Date();
-
-let selectedDate=null;
-
-
-function dateKey(date){
-
-    return(
-        date.getFullYear()+
-        "-"+
-        String(
-            date.getMonth()+1
-        ).padStart(2,"0")+
-        "-"+
-        String(
-            date.getDate()
-        ).padStart(2,"0")
-    );
-
-}
-
 
 function changeMonth(amount){
 
-    calendarDate.setMonth(
-        calendarDate.getMonth()+amount
-    );
+calendarDate.setMonth(
+calendarDate.getMonth()+amount
+);
 
-    renderCalendar();
+renderCalendar();
 
 }
 
-
 function renderCalendar(){
 
-    loadMoneyData();
+loadMoneyData();
 
+const grid=
+document.getElementById(
+"calendarGrid"
+);
 
-    const grid=
-        document.getElementById(
-            "calendarGrid"
-        );
+if(!grid)return;
 
+grid.innerHTML="";
 
-    grid.innerHTML="";
+const year=
+calendarDate.getFullYear();
 
+const month=
+calendarDate.getMonth();
 
-    const year=
-        calendarDate.getFullYear();
+document.getElementById(
+"monthTitle"
+).textContent=
+calendarDate.toLocaleDateString(
+"en-US",
+{
+month:"long",
+year:"numeric"
+}
+);
 
-    const month=
-        calendarDate.getMonth();
+[
+"Sun","Mon","Tue",
+"Wed","Thu","Fri","Sat"
+]
+.forEach(name=>{
 
+const cell=
+document.createElement("div");
 
-    document
-    .getElementById(
-        "monthTitle"
-    )
-    .textContent=
-        calendarDate.toLocaleDateString(
-            "en-US",
-            {
-                month:"long",
-                year:"numeric"
-            }
-        );
+cell.className="weekday";
+cell.textContent=name;
 
+grid.appendChild(cell);
 
-    [
-        "Sun",
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat"
-    ]
-    .forEach(name=>{
+});
 
-        const cell=
-            document.createElement(
-                "div"
-            );
+const firstDay=
+new Date(
+year,
+month,
+1
+).getDay();
 
-        cell.className="weekday";
+const totalDays=
+new Date(
+year,
+month+1,
+0
+).getDate();
 
-        cell.textContent=name;
+for(let i=0;i<firstDay;i++){
 
-        grid.appendChild(cell);
+const blank=
+document.createElement("div");
 
-    });
+blank.className="day empty";
 
+grid.appendChild(blank);
 
-    const firstDay=
-        new Date(
-            year,
-            month,
-            1
-        ).getDay();
+}
 
+const today=
+dateKey(new Date());
 
-    const totalDays=
-        new Date(
-            year,
-            month+1,
-            0
-        ).getDate();
+for(let day=1;day<=totalDays;day++){
 
+const key=
+year+
+"-"+
+String(month+1).padStart(2,"0")+
+"-"+
+String(day).padStart(2,"0");
 
-    for(
-        let i=0;
-        i<firstDay;
-        i++
-    ){
+const cell=
+document.createElement("div");
 
-        const blank=
-            document.createElement(
-                "div"
-            );
+cell.className="day";
 
-        blank.className=
-            "day empty";
+if(key===today){
 
-        grid.appendChild(blank);
+cell.classList.add("today");
 
-    }
+}
 
+const data=
+moneyData[key]||{};
 
-    const today=
-        dateKey(
-            new Date()
-        );
+const number=
+document.createElement("div");
 
+number.className="dayNumber";
+number.textContent=day;
 
-    for(
-        let day=1;
-        day<=totalDays;
-        day++
-    ){
+cell.appendChild(number);
 
-        const key=
-            year+
-            "-"+
-            String(
-                month+1
-            ).padStart(2,"0")+
-            "-"+
-            String(day).padStart(2,"0");
+const tasks=
+Array.isArray(data.tasks)
+?data.tasks
+:[];
 
+const allComplete=
+tasks.length>0 &&
+tasks.every(task=>task.done);
 
-        const cell=
-            document.createElement(
-                "div"
-            );
+if(allComplete){
 
-        cell.className="day";
+const badge=
+document.createElement("div");
 
+badge.className="completeBadge";
+badge.textContent="✅";
 
-        if(key===today){
+cell.appendChild(badge);
 
-            cell.classList.add(
-                "today"
-            );
+}
 
-        }
+const expected=
+document.createElement("div");
 
+expected.className="dayMoney";
+expected.textContent=
+money(data.expected||0);
 
-        const data=
-            moneyData[key] || {};
+cell.appendChild(expected);
 
+if(Number(data.actual||0)>0){
 
-        const number=
-            document.createElement(
-                "div"
-            );
+const actual=
+document.createElement("div");
 
-        number.className=
-            "dayNumber";
+actual.className="dayActual";
 
-        number.textContent=day;
+actual.textContent=
+"Made "+money(data.actual);
 
-        cell.appendChild(number);
+cell.appendChild(actual);
 
+}
 
-        const tasks=
-            Array.isArray(data.tasks)
-            ? data.tasks
-            : [];
+if(tasks.length>0){
 
+const count=
+document.createElement("div");
 
-        const allComplete=
-            tasks.length>0 &&
-            tasks.every(
-                task=>task.done
-            );
+count.className="dayActual";
 
+count.textContent=
+tasks.filter(
+task=>task.done
+).length+
+"/"+
+tasks.length+
+" tasks";
 
-        if(allComplete){
+cell.appendChild(count);
 
-            const badge=
-                document.createElement(
-                    "div"
-                );
+}
 
-            badge.className=
-                "completeBadge";
+cell.onclick=()=>{
 
-            badge.textContent="✅";
+openDate(key);
 
-            cell.appendChild(badge);
+};
 
-        }
+grid.appendChild(cell);
 
-
-        const expected=
-            document.createElement(
-                "div"
-            );
-
-        expected.className=
-            "dayMoney";
-
-        expected.textContent=
-            money(
-                data.expected||0
-            );
-
-        cell.appendChild(expected);
-
-
-        if(
-            Number(data.actual||0)>0
-        ){
-
-            const actual=
-                document.createElement(
-                    "div"
-                );
-
-            actual.className=
-                "dayActual";
-
-            actual.textContent=
-                "Made "+
-                money(data.actual);
-
-            cell.appendChild(actual);
-
-        }
-
-
-        if(tasks.length>0){
-
-            const taskCount=
-                document.createElement(
-                    "div"
-                );
-
-            taskCount.className=
-                "dayActual";
-
-            taskCount.textContent=
-                tasks.filter(
-                    task=>task.done
-                ).length+
-                "/"+
-                tasks.length+
-                " tasks";
-
-            cell.appendChild(taskCount);
-
-        }
-
-
-        cell.onclick=()=>{
-
-            openDate(key);
-
-        };
-
-
-        grid.appendChild(cell);
-
-    }
+}
 
 }
 
 
 /* ==========================================================
-   DAILY PLANNER
+DAILY PLANNER
 ========================================================== */
 
 function openDate(key){
 
-    selectedDate=key;
+selectedDate=key;
 
+const data=
+moneyData[key]||{};
 
-    const data=
-        moneyData[key] || {};
+document.getElementById(
+"selectedDateTitle"
+).textContent=
+new Date(
+key+"T12:00:00"
+).toLocaleDateString(
+"en-US",
+{
+weekday:"long",
+month:"long",
+day:"numeric",
+year:"numeric"
+}
+);
 
+document.getElementById(
+"expectedInput"
+).value=
+data.expected ?? "";
 
-    document
-    .getElementById(
-        "selectedDateTitle"
-    )
-    .textContent=
-        new Date(
-            key+"T12:00:00"
-        ).toLocaleDateString(
-            "en-US",
-            {
-                weekday:"long",
-                month:"long",
-                day:"numeric",
-                year:"numeric"
-            }
-        );
+document.getElementById(
+"actualInput"
+).value=
+data.actual ?? "";
 
+document.getElementById(
+"dailyNote"
+).value=
+data.note||"";
 
-    document
-    .getElementById(
-        "expectedInput"
-    )
-    .value=
-        data.expected ?? "";
+document.getElementById(
+"newTaskInput"
+).value="";
 
+renderTasks();
 
-    document
-    .getElementById(
-        "actualInput"
-    )
-    .value=
-        data.actual ?? "";
-
-
-    document
-    .getElementById(
-        "dailyNote"
-    )
-    .value=
-        data.note || "";
-
-
-    document
-    .getElementById(
-        "newTaskInput"
-    )
-    .value="";
-
-
-    renderTasks();
-
-
-    document
-    .getElementById(
-        "dateModal"
-    )
-    .classList
-    .add("show");
+document.getElementById(
+"dateModal"
+).classList.add("show");
 
 }
-
 
 function closeDateModal(){
 
-    document
-    .getElementById(
-        "dateModal"
-    )
-    .classList
-    .remove("show");
+document.getElementById(
+"dateModal"
+).classList.remove("show");
 
-    selectedDate=null;
+selectedDate=null;
 
 }
 
 
 /* ==========================================================
-   TASKS
+TASKS
 ========================================================== */
+
+function ensureSelectedData(){
+
+if(!selectedDate)return;
+
+if(!moneyData[selectedDate]){
+
+moneyData[selectedDate]={};
+
+}
+
+if(
+!Array.isArray(
+moneyData[selectedDate].tasks
+)
+){
+
+moneyData[selectedDate].tasks=[];
+
+}
+
+}
 
 function renderTasks(){
 
-    const list=
-        document.getElementById(
-            "taskList"
-        );
+const list=
+document.getElementById(
+"taskList"
+);
 
+list.innerHTML="";
 
-    list.innerHTML="";
+if(!selectedDate)return;
 
+ensureSelectedData();
 
-    if(!selectedDate)
-        return;
+const tasks=
+moneyData[selectedDate].tasks;
 
+if(tasks.length===0){
 
-    if(!moneyData[selectedDate]){
-
-        moneyData[selectedDate]={};
-
-    }
-
-
-    const data=
-        moneyData[selectedDate];
-
-
-    if(!Array.isArray(data.tasks))
-        data.tasks=[];
-
-
-    if(data.tasks.length===0){
-
-        list.innerHTML=
-            '<div class="small" style="padding:10px 0">No tasks yet. Add one below.</div>';
-
-    }
-
-
-    data.tasks.forEach(
-        (task,index)=>{
-
-            const row=
-                document.createElement(
-                    "div"
-                );
-
-            row.className=
-                "task"+
-                (task.done
-                    ? " done"
-                    : "");
-
-
-            const checkbox=
-                document.createElement(
-                    "input"
-                );
-
-            checkbox.type="checkbox";
-
-            checkbox.checked=
-                !!task.done;
-
-
-            checkbox.onchange=()=>{
-
-                if(
-                    moneyData[selectedDate] &&
-                    Array.isArray(
-                        moneyData[selectedDate].tasks
-                    )
-                ){
-
-                    moneyData[
-                        selectedDate
-                    ].tasks[index].done=
-                        checkbox.checked;
-
-                }
-
-
-                renderTasks();
-
-                updateDailyProgress();
-
-                renderCalendar();
-
-                updateHome();
-
-                saveMoneyData();
-
-            };
-
-
-            const text=
-                document.createElement(
-                    "div"
-                );
-
-            text.className="taskText";
-
-            text.textContent=
-                task.text;
-
-
-            const remove=
-                document.createElement(
-                    "button"
-                );
-
-            remove.className=
-                "deleteTask";
-
-            remove.textContent="×";
-
-            remove.title="Delete task";
-
-
-            remove.onclick=()=>{
-
-                if(
-                    moneyData[selectedDate] &&
-                    Array.isArray(
-                        moneyData[selectedDate].tasks
-                    )
-                ){
-
-                    moneyData[
-                        selectedDate
-                    ].tasks.splice(
-                        index,
-                        1
-                    );
-
-                }
-
-
-                renderTasks();
-
-                updateDailyProgress();
-
-                renderCalendar();
-
-                updateHome();
-
-                saveMoneyData();
-
-            };
-
-
-            row.appendChild(checkbox);
-
-            row.appendChild(text);
-
-            row.appendChild(remove);
-
-            list.appendChild(row);
-
-        }
-    );
-
-
-    updateDailyProgress();
+list.innerHTML=
+'<div class="small" style="padding:10px 0">No tasks yet. Add one below.</div>';
 
 }
 
+tasks.forEach((task,index)=>{
+
+const row=
+document.createElement("div");
+
+row.className=
+"task"+
+(task.done?" done":"");
+
+const checkbox=
+document.createElement("input");
+
+checkbox.type="checkbox";
+checkbox.checked=!!task.done;
+
+checkbox.onchange=()=>{
+
+task.done=
+checkbox.checked;
+
+saveMoneyData();
+renderTasks();
+renderCalendar();
+updateHome();
+
+};
+
+const text=
+document.createElement("div");
+
+text.className="taskText";
+text.textContent=task.text;
+
+const remove=
+document.createElement("button");
+
+remove.className="deleteTask";
+remove.textContent="×";
+
+remove.onclick=()=>{
+
+tasks.splice(index,1);
+
+saveMoneyData();
+renderTasks();
+renderCalendar();
+updateHome();
+
+};
+
+row.appendChild(checkbox);
+row.appendChild(text);
+row.appendChild(remove);
+
+list.appendChild(row);
+
+});
+
+updateDailyProgress();
+
+}
 
 function addTask(){
 
-    if(!selectedDate)
-        return;
+if(!selectedDate)return;
 
+const input=
+document.getElementById(
+"newTaskInput"
+);
 
-    const input=
-        document.getElementById(
-            "newTaskInput"
-        );
+const text=
+input.value.trim();
 
+if(!text)return;
 
-    const text=
-        input.value.trim();
+ensureSelectedData();
 
+moneyData[selectedDate]
+.tasks.push({
+text:text,
+done:false
+});
 
-    if(!text)
-        return;
+input.value="";
 
-
-    if(!moneyData[selectedDate]){
-
-        moneyData[selectedDate]={};
-
-    }
-
-
-    if(
-        !Array.isArray(
-            moneyData[selectedDate].tasks
-        )
-    ){
-
-        moneyData[selectedDate].tasks=[];
-
-    }
-
-
-    moneyData[selectedDate]
-    .tasks
-    .push({
-
-        text:text,
-
-        done:false
-
-    });
-
-
-    input.value="";
-
-
-    saveMoneyData();
-
-    renderTasks();
-
-    renderCalendar();
-
-    updateHome();
+saveMoneyData();
+renderTasks();
+renderCalendar();
+updateHome();
 
 }
 
 
-document
-.getElementById(
-    "newTaskInput"
-)
-.addEventListener(
-    "keydown",
-    event=>{
-
-        if(event.key==="Enter"){
-
-            event.preventDefault();
-
-            addTask();
-
-        }
-
-    }
-);
-
-
 /* ==========================================================
-   DAILY PROGRESS
+DAILY PROGRESS
 ========================================================== */
 
 function updateDailyProgress(){
 
-    if(!selectedDate)
-        return;
+if(!selectedDate)return;
 
+const data=
+moneyData[selectedDate]||{};
 
-    const data=
-        moneyData[selectedDate] || {};
+const tasks=
+Array.isArray(data.tasks)
+?data.tasks
+:[];
 
+const completed=
+tasks.filter(
+task=>task.done
+).length;
 
-    const tasks=
-        Array.isArray(data.tasks)
-        ? data.tasks
-        : [];
+const total=tasks.length;
 
+document.getElementById(
+"dailyTaskProgress"
+).textContent=
+completed+"/"+total;
 
-    const completed=
-        tasks.filter(
-            task=>task.done
-        ).length;
+const percent=
+total>0
+?completed/total*100
+:0;
 
-
-    const total=
-        tasks.length;
-
-
-    document
-    .getElementById(
-        "dailyTaskProgress"
-    )
-    .textContent=
-        completed+"/"+total;
-
-
-    const percent=
-        total>0
-        ? completed/total*100
-        : 0;
-
-
-    document
-    .getElementById(
-        "dailyProgressBar"
-    )
-    .style.width=
-        percent+"%";
+document.getElementById(
+"dailyProgressBar"
+).style.width=
+percent+"%";
 
 }
 
 
 /* ==========================================================
-   SAVE DAILY PLANNER
+SAVE DAY
 ========================================================== */
 
 function saveDate(){
 
-    if(!selectedDate)
-        return;
+if(!selectedDate)return;
 
+ensureSelectedData();
 
-    if(!moneyData[selectedDate]){
+const expected=
+Number(
+document.getElementById(
+"expectedInput"
+).value||0
+);
 
-        moneyData[selectedDate]={};
+const actual=
+Number(
+document.getElementById(
+"actualInput"
+).value||0
+);
 
-    }
+moneyData[selectedDate].expected=
+Number.isFinite(expected)&&expected>=0
+?expected
+:0;
 
+moneyData[selectedDate].actual=
+Number.isFinite(actual)&&actual>=0
+?actual
+:0;
 
-    const expected=
-        Number(
-            document
-            .getElementById(
-                "expectedInput"
-            )
-            .value || 0
-        );
+moneyData[selectedDate].note=
+document.getElementById(
+"dailyNote"
+).value;
 
+saveMoneyData();
 
-    const actual=
-        Number(
-            document
-            .getElementById(
-                "actualInput"
-            )
-            .value || 0
-        );
-
-
-    moneyData[selectedDate].expected=
-        Number.isFinite(expected) && expected>=0
-        ? expected
-        : 0;
-
-
-    moneyData[selectedDate].actual=
-        Number.isFinite(actual) && actual>=0
-        ? actual
-        : 0;
-
-
-    moneyData[selectedDate].note=
-        document
-        .getElementById(
-            "dailyNote"
-        )
-        .value;
-
-
-    if(
-        !Array.isArray(
-            moneyData[selectedDate].tasks
-        )
-    ){
-
-        moneyData[selectedDate].tasks=[];
-
-    }
-
-
-    saveMoneyData();
-
-    closeDateModal();
-
-    renderCalendar();
-
-    updateHome();
+closeDateModal();
+renderCalendar();
+updateHome();
 
 }
 
-
 function clearDate(){
 
-    if(!selectedDate)
-        return;
+if(!selectedDate)return;
 
+delete moneyData[selectedDate];
 
-    delete moneyData[selectedDate];
+saveMoneyData();
 
-
-    saveMoneyData();
-
-    closeDateModal();
-
-    renderCalendar();
-
-    updateHome();
+closeDateModal();
+renderCalendar();
+updateHome();
 
 }
 
 
 /* ==========================================================
-   GENERAL NOTES
+GENERAL NOTES
 ========================================================== */
 
 function loadGeneralNotes(){
 
-    const notes=
-        localStorage.getItem(
-            notesKey()
-        ) || "";
+const notes=
+localStorage.getItem(
+notesKey()
+)||"";
 
+const notesElement=
+document.getElementById(
+"generalNotes"
+);
 
-    document
-    .getElementById(
-        "generalNotes"
-    )
-    .value=notes;
+if(notesElement){
+
+notesElement.value=notes;
 
 }
 
+}
 
 function saveGeneralNotes(){
 
-    localStorage.setItem(
-        notesKey(),
-        document
-        .getElementById(
-            "generalNotes"
-        )
-        .value
-    );
+localStorage.setItem(
+notesKey(),
+document.getElementById(
+"generalNotes"
+).value
+);
 
+const message=
+document.getElementById(
+"notesSaved"
+);
 
-    const message=
-        document.getElementById(
-            "notesSaved"
-        );
+message.classList.add("show");
 
+setTimeout(()=>{
 
-    message.classList.add(
-        "show"
-    );
+message.classList.remove("show");
 
-
-    setTimeout(()=>{
-
-        message.classList.remove(
-            "show"
-        );
-
-    },1500);
+},1500);
 
 }
 
 
 /* ==========================================================
-   DARK MODE
+DARK MODE
 ========================================================== */
 
 function toggleDark(){
 
-    document
-    .body
-    .classList
-    .toggle("dark");
+document.body.classList.toggle("dark");
 
-
-    localStorage.setItem(
-        "business_dark_mode",
-        document
-        .body
-        .classList
-        .contains("dark")
-    );
+localStorage.setItem(
+"business_dark_mode",
+document.body.classList.contains("dark")
+);
 
 }
 
-
 if(
-    localStorage.getItem(
-        "business_dark_mode"
-    )==="true"
+localStorage.getItem(
+"business_dark_mode"
+)==="true"
 ){
 
-    document
-    .body
-    .classList
-    .add("dark");
+document.body.classList.add("dark");
 
 }
 
 
 /* ==========================================================
-   ANONYMOUS WEBSITE VISITOR ID
+FIREBASE INITIALIZATION
 ========================================================== */
 
-let visitorID=
-    localStorage.getItem(
-        "business_visitor_id"
-    );
+try{
 
+if(
+typeof firebase!=="undefined" &&
+firebase.apps.length===0
+){
+
+firebase.initializeApp({
+
+databaseURL:DATABASE_URL
+
+});
+
+}
+
+if(typeof firebase!=="undefined"){
+
+database=firebase.database();
+
+}
+
+}catch(error){
+
+console.error(
+"Firebase initialization failed:",
+error
+);
+
+database=null;
+
+}
+
+
+/* ==========================================================
+ANONYMOUS VISITOR
+========================================================== */
 
 if(!visitorID){
 
-    if(
-        window.crypto &&
-        crypto.randomUUID
-    ){
+if(
+window.crypto &&
+typeof crypto.randomUUID==="function"
+){
 
-        visitorID=
-            crypto.randomUUID();
+visitorID=crypto.randomUUID();
 
-    }else{
+}else{
 
-        visitorID=
-            "visitor_"+
-            Math.random()
-            .toString(36)
-            .substring(2)+
-            Date.now();
+visitorID=
+"visitor_"+
+Math.random()
+.toString(36)
+.substring(2)+
+Date.now();
 
-    }
+}
 
-
-    localStorage.setItem(
-        "business_visitor_id",
-        visitorID
-    );
+localStorage.setItem(
+"business_visitor_id",
+visitorID
+);
 
 }
 
 
 /* ==========================================================
-   FIREBASE ANALYTICS
+FIREBASE ANALYTICS
 ========================================================== */
 
 async function setupAnalytics(){
 
-    if(!database)
-        return;
+if(!database)return;
 
+try{
 
-    try{
+const presence=
+database.ref(
+"analytics/presence/"+visitorID
+);
 
-        const presence=
-            database.ref(
-                "analytics/presence/"+
-                visitorID
-            );
+await presence.set({
 
+online:true,
 
-        await presence.set({
+lastSeen:
+firebase.database.ServerValue.TIMESTAMP
 
-            online:true,
+});
 
-            lastSeen:
-                firebase
-                .database
-                .ServerValue
-                .TIMESTAMP
+presence
+.onDisconnect()
+.update({
 
-        });
+online:false,
 
+lastSeen:
+firebase.database.ServerValue.TIMESTAMP
 
-        presence
-        .onDisconnect()
-        .update({
+});
 
-            online:false,
+await recordDailyActivity();
 
-            lastSeen:
-                firebase
-                .database
-                .ServerValue
-                .TIMESTAMP
+}catch(error){
 
-        });
-
-
-        await recordDailyActivity();
-
-
-    }catch(error){
-
-        console.log(
-            "Analytics setup error:",
-            error
-        );
-
-    }
+console.error(
+"Analytics setup error:",
+error
+);
 
 }
 
+}
 
 async function recordDailyActivity(){
 
-    if(!database)
-        return;
+if(!database)return;
 
+const today=
+dateKey(new Date());
 
-    const today=
-        dateKey(
-            new Date()
-        );
+try{
 
+const userRef=
+database.ref(
+"analytics/users/"+visitorID
+);
 
-    try{
+const snapshot=
+await userRef.once("value");
 
-        const userRef=
-            database.ref(
-                "analytics/users/"+
-                visitorID
-            );
+if(!snapshot.exists()){
 
+await userRef.set({
 
-        const snapshot=
-            await userRef.once(
-                "value"
-            );
+firstSeen:
+firebase.database.ServerValue.TIMESTAMP,
 
+lastSeen:
+firebase.database.ServerValue.TIMESTAMP,
 
-        if(!snapshot.exists()){
+activity:{
+[today]:true
+}
 
-            await userRef.set({
+});
 
-                firstSeen:
-                    firebase
-                    .database
-                    .ServerValue
-                    .TIMESTAMP,
+}else{
 
-                lastSeen:
-                    firebase
-                    .database
-                    .ServerValue
-                    .TIMESTAMP,
+await userRef.update({
 
-                activity:{
-                    [today]:true
-                }
+lastSeen:
+firebase.database.ServerValue.TIMESTAMP
 
-            });
+});
 
-        }else{
-
-            await userRef.update({
-
-                lastSeen:
-                    firebase
-                    .database
-                    .ServerValue
-                    .TIMESTAMP
-
-            });
-
-
-            await database
-            .ref(
-                "analytics/users/"+
-                visitorID+
-                "/activity/"+
-                today
-            )
-            .set(true);
-
-        }
-
-
-        await updateDailyUserCount(
-            today
-        );
-
-
-        await updateConcurrentCount(
-            today
-        );
-
-
-    }catch(error){
-
-        console.log(
-            "Analytics error:",
-            error
-        );
-
-    }
+await database
+.ref(
+"analytics/users/"+
+visitorID+
+"/activity/"+
+today
+)
+.set(true);
 
 }
 
+await updateDailyUserCount(today);
+await updateConcurrentCount(today);
+
+}catch(error){
+
+console.error(
+"Daily analytics error:",
+error
+);
+
+}
+
+}
 
 async function updateDailyUserCount(today){
 
-    try{
+if(!database)return;
 
-        const snapshot=
-            await database
-            .ref(
-                "analytics/users"
-            )
-            .once(
-                "value"
-            );
+try{
 
+const snapshot=
+await database
+.ref("analytics/users")
+.once("value");
 
-        const users=
-            snapshot.val() || {};
+const users=
+snapshot.val()||{};
 
+let count=0;
 
-        let count=0;
+Object.values(users)
+.forEach(user=>{
 
+if(
+user &&
+user.activity &&
+user.activity[today]
+){
 
-        Object.values(
-            users
-        )
-        .forEach(user=>{
-
-            if(
-                user &&
-                user.activity &&
-                user.activity[today]
-            ){
-
-                count++;
-
-            }
-
-        });
-
-
-        await database
-        .ref(
-            "analytics/daily/"+
-            today+
-            "/activeUsers"
-        )
-        .set(count);
-
-
-    }catch(error){
-
-        console.log(error);
-
-    }
+count++;
 
 }
 
+});
+
+await database
+.ref(
+"analytics/daily/"+
+today+
+"/activeUsers"
+)
+.set(count);
+
+}catch(error){
+
+console.error(
+"Daily user count error:",
+error
+);
+
+}
+
+}
 
 async function updateConcurrentCount(today){
 
-    try{
+if(!database)return;
 
-        const snapshot=
-            await database
-            .ref(
-                "analytics/presence"
-            )
-            .once(
-                "value"
-            );
+try{
 
+const snapshot=
+await database
+.ref("analytics/presence")
+.once("value");
 
-        const presence=
-            snapshot.val() || {};
+const presence=
+snapshot.val()||{};
 
+let online=0;
 
-        let online=0;
+Object.values(presence)
+.forEach(user=>{
 
+if(
+user &&
+user.online===true
+){
 
-        Object.values(
-            presence
-        )
-        .forEach(user=>{
+online++;
 
-            if(
-                user &&
-                user.online===true
-            ){
+}
 
-                online++;
+});
 
-            }
+const maxRef=
+database.ref(
+"analytics/daily/"+
+today+
+"/concurrent"
+);
 
-        });
+const oldSnapshot=
+await maxRef.once("value");
 
+const oldMax=
+Number(oldSnapshot.val()||0);
 
-        const maxRef=
-            database.ref(
-                "analytics/daily/"+
-                today+
-                "/concurrent"
-            );
+if(online>oldMax){
 
+await maxRef.set(online);
 
-        const oldSnapshot=
-            await maxRef.once(
-                "value"
-            );
+}
 
+}catch(error){
 
-        const oldMax=
-            Number(
-                oldSnapshot.val() || 0
-            );
+console.error(
+"Concurrent count error:",
+error
+);
 
-
-        if(online>oldMax){
-
-            await maxRef.set(
-                online
-            );
-
-        }
-
-    }catch(error){
-
-        console.log(error);
-
-    }
+}
 
 }
 
 
-/* HEARTBEAT */
+/* ==========================================================
+HEARTBEAT
+========================================================== */
 
-setInterval(
-    async()=>{
+setInterval(async()=>{
 
-        if(!database)
-            return;
+if(!database)return;
 
+try{
 
-        try{
+await database
+.ref(
+"analytics/presence/"+
+visitorID
+)
+.update({
 
-            await database
-            .ref(
-                "analytics/presence/"+
-                visitorID
-            )
-            .update({
+online:true,
 
-                online:true,
+lastSeen:
+firebase.database.ServerValue.TIMESTAMP
 
-                lastSeen:
-                    firebase
-                    .database
-                    .ServerValue
-                    .TIMESTAMP
+});
 
-            });
+await recordDailyActivity();
 
+}catch(error){
 
-            await recordDailyActivity();
-
-
-        }catch(error){
-
-            console.log(error);
-
-        }
-
-    },
-    15000
+console.error(
+"Heartbeat error:",
+error
 );
+
+}
+
+},15000);
 
 
 /* ==========================================================
-   ANALYTICS DASHBOARD
+WEEK CALCULATOR
 ========================================================== */
-
-let concurrentChart=null;
-
-let weeklyChart=null;
-
 
 function getWeekDates(offset){
 
-    const now=
-        new Date();
+const now=new Date();
 
+const day=now.getDay();
 
-    const day=
-        now.getDay();
+const monday=new Date(now);
 
+monday.setDate(
+now.getDate()-
+(day===0?6:day-1)+
+offset*7
+);
 
-    const monday=
-        new Date(now);
+monday.setHours(0,0,0,0);
 
+const days=[];
 
-    monday.setDate(
-        now.getDate()-
-        (day===0 ? 6 : day-1)+
-        offset*7
-    );
+for(let i=0;i<7;i++){
 
+const d=new Date(monday);
 
-    monday.setHours(
-        0,0,0,0
-    );
+d.setDate(
+monday.getDate()+i
+);
 
-
-    const days=[];
-
-
-    for(
-        let i=0;
-        i<7;
-        i++
-    ){
-
-        const d=
-            new Date(monday);
-
-
-        d.setDate(
-            monday.getDate()+i
-        );
-
-
-        days.push(d);
-
-    }
-
-
-    return days;
+days.push(d);
 
 }
 
+return days;
+
+}
+
+
+/* ==========================================================
+ANALYTICS
+========================================================== */
 
 async function loadAnalytics(){
 
-    if(
-        !currentUsername ||
-        currentUsername.toLowerCase()!==OWNER
-    )
-        return;
+if(
+!currentUsername ||
+currentUsername.toLowerCase()!==OWNER
+){
 
+return;
 
-    if(!database){
+}
 
-        document
-        .getElementById(
-            "firebaseStatus"
-        )
-        .textContent=
-            "Database unavailable";
+if(!database){
 
-        return;
+document.getElementById(
+"firebaseStatus"
+).textContent=
+"Database unavailable";
 
-    }
+return;
 
+}
 
-    try{
+try{
 
-        const [
-            presenceSnap,
-            usersSnap,
-            dailySnap
-        ]=
-        await Promise.all([
+const results=
+await Promise.all([
 
-            database
-            .ref(
-                "analytics/presence"
-            )
-            .once("value"),
+database
+.ref("analytics/presence")
+.once("value"),
 
-            database
-            .ref(
-                "analytics/users"
-            )
-            .once("value"),
+database
+.ref("analytics/users")
+.once("value"),
 
-            database
-            .ref(
-                "analytics/daily"
-            )
-            .once("value")
+database
+.ref("analytics/daily")
+.once("value")
 
-        ]);
+]);
 
+const presence=
+results[0].val()||{};
 
-        const presence=
-            presenceSnap.val() || {};
+const users=
+results[1].val()||{};
 
+const daily=
+results[2].val()||{};
 
-        const users=
-            usersSnap.val() || {};
+let online=0;
 
+Object.values(presence)
+.forEach(user=>{
 
-        const daily=
-            dailySnap.val() || {};
+if(
+user &&
+user.online===true
+){
 
+online++;
 
-        let online=0;
+}
 
+});
 
-        Object.values(
-            presence
-        )
-        .forEach(user=>{
+const currentWeek=
+getWeekDates(0)
+.map(dateKey);
 
-            if(
-                user &&
-                user.online===true
-            ){
+const previousWeek=
+getWeekDates(-1)
+.map(dateKey);
 
-                online++;
+const currentUsers=new Set();
+const previousUsers=new Set();
 
-            }
+Object.entries(users)
+.forEach(([id,user])=>{
 
-        });
+if(
+!user ||
+!user.activity
+)return;
 
+Object.keys(user.activity)
+.forEach(day=>{
 
-        const currentWeek=
-            getWeekDates(0)
-            .map(dateKey);
+if(currentWeek.includes(day)){
 
+currentUsers.add(id);
 
-        const previousWeek=
-            getWeekDates(-1)
-            .map(dateKey);
+}
 
+if(previousWeek.includes(day)){
 
-        const currentUsers=
-            new Set();
+previousUsers.add(id);
 
+}
 
-        const previousUsers=
-            new Set();
+});
 
+});
 
-        Object.entries(
-            users
-        )
-        .forEach(
-            ([id,user])=>{
+let returned=0;
 
-                if(
-                    !user ||
-                    !user.activity
-                )
-                    return;
+previousUsers.forEach(id=>{
 
+if(currentUsers.has(id)){
 
-                Object.keys(
-                    user.activity
-                )
-                .forEach(day=>{
+returned++;
 
-                    if(
-                        currentWeek.includes(day)
-                    ){
+}
 
-                        currentUsers.add(id);
+});
 
-                    }
+const retention=
+previousUsers.size>0
+?returned/previousUsers.size*100
+:0;
 
+document.getElementById(
+"currentOnline"
+).textContent=online;
 
-                    if(
-                        previousWeek.includes(day)
-                    ){
+document.getElementById(
+"usersThisWeek"
+).textContent=
+currentUsers.size;
 
-                        previousUsers.add(id);
+document.getElementById(
+"returnedUsers"
+).textContent=returned;
 
-                    }
+document.getElementById(
+"retentionRate"
+).textContent=
+retention.toFixed(1)+"%";
 
-                });
+document.getElementById(
+"firebaseStatus"
+).textContent=
+"Analytics connected";
 
-            }
-        );
+document.getElementById(
+"updatedTime"
+).textContent=
+"Updated "+
+new Date().toLocaleTimeString();
 
+try{
 
-        let returned=0;
+drawCharts(daily);
 
+}catch(chartError){
 
-        previousUsers.forEach(id=>{
+console.error(
+"Chart drawing failed:",
+chartError
+);
 
-            if(
-                currentUsers.has(id)
-            ){
+document.getElementById(
+"firebaseStatus"
+).textContent=
+"Analytics connected • charts unavailable";
 
-                returned++;
+}
 
-            }
+}catch(error){
 
-        });
+console.error(
+"Analytics loading error:",
+error
+);
 
+document.getElementById(
+"firebaseStatus"
+).textContent=
+"Analytics error";
 
-        const retention=
-            previousUsers.size>0
-            ? returned/
-              previousUsers.size*
-              100
-            : 0;
-
-
-        document
-        .getElementById(
-            "currentOnline"
-        )
-        .textContent=online;
-
-
-        document
-        .getElementById(
-            "usersThisWeek"
-        )
-        .textContent=
-            currentUsers.size;
-
-
-        document
-        .getElementById(
-            "returnedUsers"
-        )
-        .textContent=returned;
-
-
-        document
-        .getElementById(
-            "retentionRate"
-        )
-        .textContent=
-            retention.toFixed(1)+"%";
-
-
-        document
-        .getElementById(
-            "firebaseStatus"
-        )
-        .textContent=
-            "Analytics connected";
-
-
-        document
-        .getElementById(
-            "updatedTime"
-        )
-        .textContent=
-            "Updated "+
-            new Date()
-            .toLocaleTimeString();
-
-
-        drawCharts(daily);
-
-
-    }catch(error){
-
-        console.error(error);
-
-        document
-        .getElementById(
-            "firebaseStatus"
-        )
-        .textContent=
-            "Analytics error";
-
-    }
+}
 
 }
 
 
 /* ==========================================================
-   CHARTS
+CHART SYSTEM
 ========================================================== */
+
+function destroyCharts(){
+
+try{
+
+if(
+concurrentChart &&
+typeof concurrentChart.destroy==="function"
+){
+
+concurrentChart.destroy();
+
+}
+
+}catch(error){
+
+console.warn(
+"Could not destroy concurrent chart:",
+error
+);
+
+}
+
+try{
+
+if(
+weeklyChart &&
+typeof weeklyChart.destroy==="function"
+){
+
+weeklyChart.destroy();
+
+}
+
+}catch(error){
+
+console.warn(
+"Could not destroy weekly chart:",
+error
+);
+
+}
+
+concurrentChart=null;
+weeklyChart=null;
+
+}
 
 function drawCharts(daily){
 
-    if(typeof Chart==="undefined"){
+if(
+typeof Chart==="undefined"
+){
 
-        document
-        .getElementById(
-            "firebaseStatus"
-        )
-        .textContent=
-            "Analytics connected, charts unavailable";
+console.warn(
+"Chart.js is not available."
+);
 
-        return;
+return;
 
-    }
+}
 
+if(
+!daily ||
+typeof daily!=="object"
+){
 
-    const dates=
-        getWeekDates(0);
+daily={};
 
+}
 
-    const labels=
-        dates.map(date=>
-            date.toLocaleDateString(
-                "en-US",
-                {
-                    weekday:"short"
-                }
-            )
-        );
+destroyCharts();
 
+const dates=
+getWeekDates(0);
 
-    const keys=
-        dates.map(dateKey);
+const labels=
+dates.map(date=>{
 
+return date.toLocaleDateString(
+"en-US",
+{
+weekday:"short"
+}
+);
 
-    const concurrent=
-        keys.map(key=>
-            Number(
-                daily[key]?.concurrent || 0
-            )
-        );
+});
 
+const keys=
+dates.map(dateKey);
 
-    const active=
-        keys.map(key=>
-            Number(
-                daily[key]?.activeUsers || 0
-            )
-        );
+const concurrent=
+keys.map(key=>{
 
+const item=
+daily[key];
 
-    if(concurrentChart){
+return item
+?Number(item.concurrent||0)
+:0;
 
-        concurrentChart.destroy();
+});
 
-        concurrentChart=null;
+const active=
+keys.map(key=>{
 
-    }
+const item=
+daily[key];
 
+return item
+?Number(item.activeUsers||0)
+:0;
 
-    if(weeklyChart){
+});
 
-        weeklyChart.destroy();
+const concurrentCanvas=
+document.getElementById(
+"concurrentChart"
+);
 
-        weeklyChart=null;
+const weeklyCanvas=
+document.getElementById(
+"weeklyChart"
+);
 
-    }
+if(
+!concurrentCanvas ||
+!weeklyCanvas
+){
 
+console.warn(
+"Chart canvas not found."
+);
 
-    const concurrentCanvas=
-        document.getElementById(
-            "concurrentChart"
-        );
+return;
 
+}
 
-    const weeklyCanvas=
-        document.getElementById(
-            "weeklyChart"
-        );
+try{
 
+const c1=
+concurrentCanvas.getContext("2d");
 
-    if(!concurrentCanvas || !weeklyCanvas)
-        return;
+if(c1){
 
+c1.clearRect(
+0,
+0,
+concurrentCanvas.width,
+concurrentCanvas.height
+);
 
-    /* FIXED LINE CHART */
+}
 
-    concurrentChart=
-        new Chart(
-            concurrentCanvas,
-            {
-                type:"line",
+const c2=
+weeklyCanvas.getContext("2d");
 
-                data:{
-                    labels:labels,
+if(c2){
 
-                    datasets:[{
-                        label:
-                            "Max Concurrent Users",
+c2.clearRect(
+0,
+0,
+weeklyCanvas.width,
+weeklyCanvas.height
+);
 
-                        data:concurrent,
+}
 
-                        tension:.35,
+}catch(error){
 
-                        fill:true
-                    }]
-                },
+console.warn(
+"Canvas cleanup warning:",
+error
+);
 
-                options:{
-                    responsive:true,
+}
 
-                    maintainAspectRatio:false
-                }
-            }
-        );
+try{
 
+concurrentChart=
+new Chart(
+concurrentCanvas,
+{
 
-    /* FIXED BAR CHART */
+type:"line",
 
-    weeklyChart=
-        new Chart(
-            weeklyCanvas,
-            {
-                type:"bar",
+data:{
 
-                data:{
-                    labels:labels,
+labels:labels,
 
-                    datasets:[{
-                        label:
-                            "Unique Active Users",
+datasets:[{
 
-                        data:active
-                    }]
-                },
+label:"Max Concurrent Users",
 
-                options:{
-                    responsive:true,
+data:concurrent,
 
-                    maintainAspectRatio:false
-                }
-            }
-        );
+borderWidth:2,
+
+tension:.35,
+
+fill:false
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false,
+
+animation:false,
+
+plugins:{
+
+legend:{
+display:true
+}
+
+},
+
+scales:{
+
+y:{
+
+beginAtZero:true,
+
+ticks:{
+precision:0
+}
+
+}
+
+}
+
+}
+
+}
+);
+
+}catch(error){
+
+console.error(
+"Concurrent chart error:",
+error
+);
+
+concurrentChart=null;
+
+}
+
+try{
+
+weeklyChart=
+new Chart(
+weeklyCanvas,
+{
+
+type:"bar",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+label:"Unique Active Users",
+
+data:active,
+
+borderWidth:1
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false,
+
+animation:false,
+
+plugins:{
+
+legend:{
+display:true
+}
+
+},
+
+scales:{
+
+y:{
+
+beginAtZero:true,
+
+ticks:{
+precision:0
+}
+
+}
+
+}
+
+}
+
+}
+);
+
+}catch(error){
+
+console.error(
+"Weekly chart error:",
+error
+);
+
+weeklyChart=null;
+
+}
 
 }
 
 
 /* ==========================================================
-   ANALYTICS REFRESH
+ANALYTICS REFRESH
 ========================================================== */
 
 setInterval(()=>{
 
-    if(
-        currentUsername &&
-        currentUsername.toLowerCase()===OWNER &&
-        document
-        .getElementById(
-            "analytics"
-        )
-        .classList
-        .contains("active")
-    ){
+if(
+currentUsername &&
+currentUsername.toLowerCase()===OWNER &&
+document
+.getElementById("analytics")
+.classList
+.contains("active")
+){
 
-        loadAnalytics();
+loadAnalytics();
 
-    }
+}
 
 },5000);
 
 
 /* ==========================================================
-   CLOSE MODAL WHEN CLICKING OUTSIDE
+MODAL EVENTS
 ========================================================== */
 
 document
 .getElementById("dateModal")
 .addEventListener(
-    "click",
-    event=>{
+"click",
+function(event){
 
-        if(
-            event.target.id==="dateModal"
-        ){
+if(
+event.target.id==="dateModal"
+){
 
-            closeDateModal();
+closeDateModal();
 
-        }
+}
 
-    }
-);
+});
+
+document.addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Escape"){
+
+closeDateModal();
+
+}
+
+});
 
 
 /* ==========================================================
-   ESCAPE KEY
+ENTER KEY FOR TASKS
 ========================================================== */
 
-document.addEventListener(
-    "keydown",
-    event=>{
+document
+.getElementById("newTaskInput")
+.addEventListener(
+"keydown",
+function(event){
 
-        if(event.key==="Escape"){
+if(event.key==="Enter"){
 
-            closeDateModal();
+event.preventDefault();
+addTask();
 
-        }
+}
 
-    }
-);
+});
+
+
+/* ==========================================================
+FINAL STARTUP
+========================================================== */
+
+/*
+This is intentionally the LAST executable startup call.
+
+By this point:
+- calendarDate exists
+- selectedDate exists
+- database exists
+- visitorID exists
+- charts exist
+- all functions exist
+
+So the previous startApp/calendarDate
+ReferenceErrors are avoided.
+*/
+
+if(currentUsername){
+
+window.startApp();
+
+}
 
 </script>
 
