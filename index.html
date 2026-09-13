@@ -89,6 +89,13 @@ textarea:focus{
     border-color:var(--text);
 }
 
+label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
 /* AUTH */
 
 .auth{
@@ -500,6 +507,7 @@ main{
 .chartBox{
     height:300px;
     margin-top:15px;
+    position:relative;
 }
 
 /* MODAL */
@@ -707,6 +715,7 @@ main{
                     id="continueUsername"
                     maxlength="30"
                     placeholder="Enter username"
+                    autocomplete="off"
                 >
 
             </div>
@@ -733,6 +742,7 @@ main{
                     id="newUsername"
                     maxlength="30"
                     placeholder="Example: mybusiness"
+                    autocomplete="off"
                 >
 
             </div>
@@ -1361,7 +1371,7 @@ main{
     </div>
 
 
-    <div class="field">
+    <div class="field" style="margin-top:12px">
 
         <label>
             💵 Actual income
@@ -1407,6 +1417,7 @@ main{
         <input
             id="newTaskInput"
             placeholder="Add a task..."
+            autocomplete="off"
         >
 
         <button onclick="addTask()">
@@ -1494,11 +1505,15 @@ let database=null;
 
 try{
 
-    firebase.initializeApp({
-        databaseURL:DATABASE_URL
-    });
+    if(typeof firebase !== "undefined"){
 
-    database=firebase.database();
+        firebase.initializeApp({
+            databaseURL:DATABASE_URL
+        });
+
+        database=firebase.database();
+
+    }
 
 }catch(error){
 
@@ -1737,7 +1752,7 @@ function loadMoneyData(){
                 ) || "{}"
             );
 
-    }catch{
+    }catch(error){
 
         moneyData={};
 
@@ -1873,6 +1888,10 @@ function updateHome(){
     )
     .forEach(
         ([date,data])=>{
+
+            if(!data)
+                return;
+
 
             planned+=
                 Number(
@@ -2096,6 +2115,13 @@ function saveGoal(){
             )
             .value || 0
         );
+
+
+    if(goal<0 || !Number.isFinite(goal)){
+
+        goal=0;
+
+    }
 
 
     saveMoneyData();
@@ -2509,7 +2535,7 @@ function openDate(key){
         "expectedInput"
     )
     .value=
-        data.expected || "";
+        data.expected ?? "";
 
 
     document
@@ -2517,7 +2543,7 @@ function openDate(key){
         "actualInput"
     )
     .value=
-        data.actual || "";
+        data.actual ?? "";
 
 
     document
@@ -2526,6 +2552,13 @@ function openDate(key){
     )
     .value=
         data.note || "";
+
+
+    document
+    .getElementById(
+        "newTaskInput"
+    )
+    .value="";
 
 
     renderTasks();
@@ -2574,8 +2607,15 @@ function renderTasks(){
         return;
 
 
+    if(!moneyData[selectedDate]){
+
+        moneyData[selectedDate]={};
+
+    }
+
+
     const data=
-        moneyData[selectedDate] || {};
+        moneyData[selectedDate];
 
 
     if(!Array.isArray(data.tasks))
@@ -2618,10 +2658,19 @@ function renderTasks(){
 
             checkbox.onchange=()=>{
 
-                moneyData[
-                    selectedDate
-                ].tasks[index].done=
-                    checkbox.checked;
+                if(
+                    moneyData[selectedDate] &&
+                    Array.isArray(
+                        moneyData[selectedDate].tasks
+                    )
+                ){
+
+                    moneyData[
+                        selectedDate
+                    ].tasks[index].done=
+                        checkbox.checked;
+
+                }
 
 
                 renderTasks();
@@ -2658,15 +2707,26 @@ function renderTasks(){
 
             remove.textContent="×";
 
+            remove.title="Delete task";
+
 
             remove.onclick=()=>{
 
-                moneyData[
-                    selectedDate
-                ].tasks.splice(
-                    index,
-                    1
-                );
+                if(
+                    moneyData[selectedDate] &&
+                    Array.isArray(
+                        moneyData[selectedDate].tasks
+                    )
+                ){
+
+                    moneyData[
+                        selectedDate
+                    ].tasks.splice(
+                        index,
+                        1
+                    );
+
+                }
 
 
                 renderTasks();
@@ -2772,6 +2832,8 @@ document
 
         if(event.key==="Enter"){
 
+            event.preventDefault();
+
             addTask();
 
         }
@@ -2851,7 +2913,7 @@ function saveDate(){
     }
 
 
-    moneyData[selectedDate].expected=
+    const expected=
         Number(
             document
             .getElementById(
@@ -2861,7 +2923,7 @@ function saveDate(){
         );
 
 
-    moneyData[selectedDate].actual=
+    const actual=
         Number(
             document
             .getElementById(
@@ -2869,6 +2931,18 @@ function saveDate(){
             )
             .value || 0
         );
+
+
+    moneyData[selectedDate].expected=
+        Number.isFinite(expected) && expected>=0
+        ? expected
+        : 0;
+
+
+    moneyData[selectedDate].actual=
+        Number.isFinite(actual) && actual>=0
+        ? actual
+        : 0;
 
 
     moneyData[selectedDate].note=
@@ -3102,6 +3176,7 @@ async function setupAnalytics(){
 
         await recordDailyActivity();
 
+
     }catch(error){
 
         console.log(
@@ -3197,6 +3272,7 @@ async function recordDailyActivity(){
             today
         );
 
+
     }catch(error){
 
         console.log(
@@ -3255,6 +3331,7 @@ async function updateDailyUserCount(today){
             "/activeUsers"
         )
         .set(count);
+
 
     }catch(error){
 
@@ -3370,6 +3447,7 @@ setInterval(
 
 
             await recordDailyActivity();
+
 
         }catch(error){
 
@@ -3663,6 +3741,7 @@ async function loadAnalytics(){
 
         drawCharts(daily);
 
+
     }catch(error){
 
         console.error(error);
@@ -3684,6 +3763,20 @@ async function loadAnalytics(){
 ========================================================== */
 
 function drawCharts(daily){
+
+    if(typeof Chart==="undefined"){
+
+        document
+        .getElementById(
+            "firebaseStatus"
+        )
+        .textContent=
+            "Analytics connected, charts unavailable";
+
+        return;
+
+    }
+
 
     const dates=
         getWeekDates(0);
@@ -3724,6 +3817,8 @@ function drawCharts(daily){
 
         concurrentChart.destroy();
 
+        concurrentChart=null;
+
     }
 
 
@@ -3731,26 +3826,39 @@ function drawCharts(daily){
 
         weeklyChart.destroy();
 
+        weeklyChart=null;
+
     }
 
 
+    const concurrentCanvas=
+        document.getElementById(
+            "concurrentChart"
+        );
+
+
+    const weeklyCanvas=
+        document.getElementById(
+            "weeklyChart"
+        );
+
+
+    if(!concurrentCanvas || !weeklyCanvas)
+        return;
+
+
+    /* FIXED LINE CHART */
+
     concurrentChart=
         new Chart(
-
-            document.getElementById(
-                "concurrentChart"
-            ),
-
+            concurrentCanvas,
             {
-
                 type:"line",
 
                 data:{
-
                     labels:labels,
 
                     datasets:[{
-
                         label:
                             "Max Concurrent Users",
 
@@ -3759,66 +3867,51 @@ function drawCharts(daily){
                         tension:.35,
 
                         fill:true
-
                     }]
-
                 },
 
                 options:{
-
                     responsive:true,
 
                     maintainAspectRatio:false
-
                 }
-
             }
-
         );
 
 
+    /* FIXED BAR CHART */
+
     weeklyChart=
         new Chart(
-
-            document.getElementById(
-                "weeklyChart"
-            ),
-
+            weeklyCanvas,
             {
-
                 type:"bar",
 
                 data:{
-
                     labels:labels,
 
                     datasets:[{
-
                         label:
                             "Unique Active Users",
 
                         data:active
-
                     }]
-
                 },
 
                 options:{
-
                     responsive:true,
 
                     maintainAspectRatio:false
-
                 }
-
             }
-
         );
 
 }
 
 
-/* ANALYTICS REFRESH */
+/* ==========================================================
+   ANALYTICS REFRESH
+========================================================== */
 
 setInterval(()=>{
 
@@ -3838,6 +3931,46 @@ setInterval(()=>{
     }
 
 },5000);
+
+
+/* ==========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================================== */
+
+document
+.getElementById("dateModal")
+.addEventListener(
+    "click",
+    event=>{
+
+        if(
+            event.target.id==="dateModal"
+        ){
+
+            closeDateModal();
+
+        }
+
+    }
+);
+
+
+/* ==========================================================
+   ESCAPE KEY
+========================================================== */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(event.key==="Escape"){
+
+            closeDateModal();
+
+        }
+
+    }
+);
 
 </script>
 
