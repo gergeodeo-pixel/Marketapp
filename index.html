@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Business Money Manager</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -18,34 +18,32 @@
 }
 
 :root{
-    --bg:#ffffff;
+    --bg:#fff;
     --card:#f7f7f7;
-    --text:#111111;
-    --muted:#777777;
-    --border:#dddddd;
-    --button:#111111;
-    --buttonText:#ffffff;
+    --text:#111;
+    --muted:#777;
+    --border:#ddd;
+    --button:#111;
+    --buttonText:#fff;
     --green:#16a34a;
     --red:#dc2626;
+    --blue:#2563eb;
 }
 
 body.dark{
     --bg:#0b0b0b;
     --card:#181818;
-    --text:#ffffff;
-    --muted:#999999;
+    --text:#fff;
+    --muted:#999;
     --border:#303030;
-    --button:#ffffff;
-    --buttonText:#111111;
-}
-
-html,body{
-    min-height:100%;
+    --button:#fff;
+    --buttonText:#111;
 }
 
 body{
     background:var(--bg);
     color:var(--text);
+    min-height:100vh;
     transition:.2s;
 }
 
@@ -69,7 +67,8 @@ button:active{
     border:1px solid var(--border);
 }
 
-input{
+input,
+textarea{
     width:100%;
     padding:13px;
     border-radius:11px;
@@ -80,11 +79,17 @@ input{
     outline:none;
 }
 
-input:focus{
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus{
     border-color:var(--text);
 }
 
-/* ACCOUNT */
+/* AUTH */
 
 .auth{
     position:fixed;
@@ -142,7 +147,6 @@ input:focus{
 .tabs button.active{
     background:var(--button);
     color:var(--buttonText);
-    border-color:var(--button);
 }
 
 .error{
@@ -153,17 +157,6 @@ input:focus{
     border-radius:10px;
     margin-bottom:14px;
     font-size:13px;
-}
-
-.field{
-    margin-bottom:15px;
-}
-
-.field label{
-    display:block;
-    color:var(--muted);
-    font-size:13px;
-    margin-bottom:6px;
 }
 
 /* HEADER */
@@ -237,7 +230,7 @@ main{
 
 .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(185px,1fr));
     gap:14px;
 }
 
@@ -266,6 +259,8 @@ main{
 .section{
     margin-top:20px;
 }
+
+/* GOAL */
 
 .progress{
     height:13px;
@@ -323,15 +318,14 @@ main{
 .day{
     display:block;
     min-width:0;
-    min-height:95px;
+    min-height:105px;
     padding:9px;
     background:var(--card);
     color:var(--text);
     border:1px solid var(--border);
     border-radius:12px;
     cursor:pointer;
-    visibility:visible;
-    opacity:1;
+    position:relative;
 }
 
 .day:hover{
@@ -344,6 +338,11 @@ main{
     cursor:default;
 }
 
+.day.today{
+    outline:2px solid var(--text);
+    outline-offset:-2px;
+}
+
 .dayNumber{
     color:var(--text);
     font-size:13px;
@@ -354,7 +353,7 @@ main{
     color:var(--text);
     font-size:12px;
     font-weight:bold;
-    margin-top:15px;
+    margin-top:14px;
 }
 
 .dayActual{
@@ -364,9 +363,100 @@ main{
     margin-top:4px;
 }
 
-.today{
-    outline:2px solid var(--text);
-    outline-offset:-2px;
+.completeBadge{
+    position:absolute;
+    top:6px;
+    right:7px;
+    font-size:13px;
+}
+
+/* TASKS */
+
+.taskList{
+    margin-top:12px;
+}
+
+.task{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    margin-bottom:7px;
+}
+
+.task input{
+    width:19px;
+    height:19px;
+    flex:none;
+}
+
+.taskText{
+    flex:1;
+    word-break:break-word;
+}
+
+.task.done .taskText{
+    text-decoration:line-through;
+    color:var(--muted);
+}
+
+.deleteTask{
+    background:transparent;
+    color:var(--red);
+    padding:5px 8px;
+}
+
+.addTaskRow{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+
+.addTaskRow input{
+    flex:1;
+}
+
+.addTaskRow button{
+    flex:none;
+}
+
+/* DAILY PROGRESS */
+
+.dailyProgress{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:15px;
+    margin-top:15px;
+}
+
+.progressText{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    color:var(--muted);
+}
+
+/* NOTES */
+
+.notesArea{
+    min-height:400px;
+    line-height:1.6;
+}
+
+.saveMessage{
+    color:var(--green);
+    font-size:12px;
+    margin-left:8px;
+    opacity:0;
+    transition:.2s;
+}
+
+.saveMessage.show{
+    opacity:1;
 }
 
 /* ANALYTICS */
@@ -422,7 +512,7 @@ main{
     display:none;
     align-items:center;
     justify-content:center;
-    padding:20px;
+    padding:15px;
 }
 
 .modal.show{
@@ -431,7 +521,9 @@ main{
 
 .modalCard{
     width:100%;
-    max-width:420px;
+    max-width:480px;
+    max-height:90vh;
+    overflow-y:auto;
     background:var(--bg);
     color:var(--text);
     border:1px solid var(--border);
@@ -451,7 +543,41 @@ main{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px;
+    margin-top:15px;
 }
+
+.divider{
+    height:1px;
+    background:var(--border);
+    margin:20px 0;
+}
+
+.statLabel{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.statValue{
+    font-size:22px;
+    font-weight:bold;
+    margin-top:4px;
+}
+
+.productivityGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:12px;
+    margin-top:15px;
+}
+
+.productivityItem{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px;
+}
+
+/* MOBILE */
 
 @media(max-width:650px){
 
@@ -493,7 +619,7 @@ main{
     }
 
     .day{
-        min-height:73px;
+        min-height:78px;
         padding:6px;
         border-radius:9px;
     }
@@ -514,13 +640,25 @@ main{
     .weekday{
         font-size:10px;
     }
+
+    .completeBadge{
+        font-size:10px;
+    }
+
+    .addTaskRow{
+        flex-direction:column;
+    }
+
+    .addTaskRow button{
+        width:100%;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ACCOUNT SCREEN -->
+<!-- ACCOUNT -->
 
 <div class="auth" id="authScreen">
 
@@ -531,7 +669,8 @@ main{
         <h1>Business Manager</h1>
 
         <p>
-            Create a username or continue with one you've already used on this device.
+            Create your username and manage your business plans,
+            tasks, goals and income.
         </p>
 
         <div class="tabs">
@@ -616,52 +755,56 @@ main{
 
 <header>
 
-    <div class="headerInner">
+<div class="headerInner">
 
-        <div class="logo">
-            💰 Business Manager
-        </div>
-
-        <div
-            class="username"
-            id="headerUsername"
-        ></div>
-
-        <nav>
-
-            <button onclick="showPage('home')">
-                Home
-            </button>
-
-            <button onclick="showPage('calendar')">
-                🗓️ Calendar
-            </button>
-
-            <button
-                id="analyticsButton"
-                style="display:none"
-                onclick="showPage('analytics')"
-            >
-                📊 Analytics
-            </button>
-
-            <button
-                class="secondary"
-                onclick="toggleDark()"
-            >
-                🌙
-            </button>
-
-            <button
-                class="secondary"
-                onclick="logout()"
-            >
-                Log Out
-            </button>
-
-        </nav>
-
+    <div class="logo">
+        💰 Business Manager
     </div>
+
+    <div
+        class="username"
+        id="headerUsername"
+    ></div>
+
+    <nav>
+
+        <button onclick="showPage('home')">
+            🏠 Home
+        </button>
+
+        <button onclick="showPage('calendar')">
+            🗓️ Calendar
+        </button>
+
+        <button onclick="showPage('notes')">
+            📝 Notes
+        </button>
+
+        <button
+            id="analyticsButton"
+            style="display:none"
+            onclick="showPage('analytics')"
+        >
+            📊 Analytics
+        </button>
+
+        <button
+            class="secondary"
+            onclick="toggleDark()"
+        >
+            🌙
+        </button>
+
+        <button
+            class="secondary"
+            onclick="logout()"
+        >
+            Log Out
+        </button>
+
+    </nav>
+
+</div>
 
 </header>
 
@@ -680,15 +823,16 @@ main{
     </div>
 
     <div class="subtitle">
-        Plan your income and track your goals.
+        Your money, goals and productivity in one place.
     </div>
+
 
     <div class="cards">
 
         <div class="card">
 
             <div class="cardTitle">
-                Planned Income
+                💰 Planned Income
             </div>
 
             <div
@@ -700,10 +844,11 @@ main{
 
         </div>
 
+
         <div class="card">
 
             <div class="cardTitle">
-                Actual Income
+                💵 Actual Income
             </div>
 
             <div
@@ -715,10 +860,11 @@ main{
 
         </div>
 
+
         <div class="card">
 
             <div class="cardTitle">
-                Business Goal
+                🎯 Business Goal
             </div>
 
             <div
@@ -730,10 +876,11 @@ main{
 
         </div>
 
+
         <div class="card">
 
             <div class="cardTitle">
-                Remaining
+                💸 Remaining
             </div>
 
             <div
@@ -748,9 +895,13 @@ main{
     </div>
 
 
+    <!-- GOAL -->
+
     <div class="card section">
 
-        <h2>🎯 Business Goal</h2>
+        <h2>
+            🎯 Business Goal
+        </h2>
 
         <div
             class="field"
@@ -798,6 +949,116 @@ main{
 
     </div>
 
+
+    <!-- PRODUCTIVITY -->
+
+    <div class="card section">
+
+        <h2>
+            📈 Productivity
+        </h2>
+
+        <div class="productivityGrid">
+
+            <div class="productivityItem">
+
+                <div class="statLabel">
+                    Tasks Completed
+                </div>
+
+                <div
+                    class="statValue"
+                    id="tasksCompleted"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="productivityItem">
+
+                <div class="statLabel">
+                    Tasks Remaining
+                </div>
+
+                <div
+                    class="statValue"
+                    id="tasksRemaining"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="productivityItem">
+
+                <div class="statLabel">
+                    Best Productivity Day
+                </div>
+
+                <div
+                    class="statValue"
+                    id="bestDay"
+                >
+                    None
+                </div>
+
+            </div>
+
+
+            <div class="productivityItem">
+
+                <div class="statLabel">
+                    Task Completion
+                </div>
+
+                <div
+                    class="statValue"
+                    id="taskCompletion"
+                >
+                    0%
+                </div>
+
+            </div>
+
+
+            <div class="productivityItem">
+
+                <div class="statLabel">
+                    Planned Income
+                </div>
+
+                <div
+                    class="statValue"
+                    id="productivityPlanned"
+                >
+                    $0
+                </div>
+
+            </div>
+
+
+            <div class="productivityItem">
+
+                <div class="statLabel">
+                    Actual Income
+                </div>
+
+                <div
+                    class="statValue green"
+                    id="productivityActual"
+                >
+                    $0
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
 
@@ -813,7 +1074,7 @@ main{
     </div>
 
     <div class="subtitle">
-        Tap a date to set how much you plan to make.
+        Tap a date to plan your work, money and tasks.
     </div>
 
 
@@ -829,9 +1090,7 @@ main{
         <div
             class="monthTitle"
             id="monthTitle"
-        >
-            Month
-        </div>
+        ></div>
 
         <button
             class="secondary"
@@ -847,6 +1106,61 @@ main{
         class="calendar"
         id="calendarGrid"
     ></div>
+
+</section>
+
+
+<!-- NOTES -->
+
+<section
+    id="notes"
+    class="page"
+>
+
+    <div class="title">
+        📝 General Notepad
+    </div>
+
+    <div class="subtitle">
+        Stuff that isn't tied to a particular day.
+    </div>
+
+
+    <div class="card">
+
+        <textarea
+            id="generalNotes"
+            class="notesArea"
+            placeholder="💡 Business ideas
+
+📦 Products to make
+
+🎯 Long-term goals
+
+📞 People to contact
+
+💰 Things to buy
+
+🧠 Random ideas before they disappear into the void..."
+        ></textarea>
+
+
+        <div style="margin-top:12px">
+
+            <button onclick="saveGeneralNotes()">
+                Save Notes
+            </button>
+
+            <span
+                class="saveMessage"
+                id="notesSaved"
+            >
+                Saved ✓
+            </span>
+
+        </div>
+
+    </div>
 
 </section>
 
@@ -906,6 +1220,7 @@ main{
 
         </div>
 
+
         <div class="card">
 
             <div class="cardTitle">
@@ -921,6 +1236,7 @@ main{
 
         </div>
 
+
         <div class="card">
 
             <div class="cardTitle">
@@ -935,6 +1251,7 @@ main{
             </div>
 
         </div>
+
 
         <div class="card">
 
@@ -965,7 +1282,11 @@ main{
         </div>
 
         <div class="chartBox">
-            <canvas id="concurrentChart"></canvas>
+
+            <canvas
+                id="concurrentChart"
+            ></canvas>
+
         </div>
 
     </div>
@@ -982,7 +1303,11 @@ main{
         </div>
 
         <div class="chartBox">
-            <canvas id="weeklyChart"></canvas>
+
+            <canvas
+                id="weeklyChart"
+            ></canvas>
+
         </div>
 
     </div>
@@ -992,80 +1317,166 @@ main{
 </main>
 
 
-<!-- DATE MODAL -->
+<!-- DAILY PLANNER MODAL -->
 
 <div
     class="modal"
     id="dateModal"
 >
 
-    <div class="modalCard">
+<div class="modalCard">
 
-        <button
-            class="close"
-            onclick="closeDateModal()"
+    <button
+        class="close"
+        onclick="closeDateModal()"
+    >
+        ×
+    </button>
+
+
+    <h2
+        id="selectedDateTitle"
+        style="margin-bottom:18px"
+    >
+        Daily Planner
+    </h2>
+
+
+    <!-- MONEY -->
+
+    <div class="field">
+
+        <label>
+            💰 Expected income
+        </label>
+
+        <input
+            id="expectedInput"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0"
         >
-            ×
+
+    </div>
+
+
+    <div class="field">
+
+        <label>
+            💵 Actual income
+        </label>
+
+        <input
+            id="actualInput"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0"
+        >
+
+    </div>
+
+
+    <div class="divider"></div>
+
+
+    <!-- TASKS -->
+
+    <h3>
+        ☑️ Tasks
+    </h3>
+
+
+    <div
+        class="small"
+        style="margin-top:4px"
+    >
+        Complete everything to get a ✅ on the calendar.
+    </div>
+
+
+    <div
+        class="taskList"
+        id="taskList"
+    ></div>
+
+
+    <div class="addTaskRow">
+
+        <input
+            id="newTaskInput"
+            placeholder="Add a task..."
+        >
+
+        <button onclick="addTask()">
+            + Add
         </button>
 
-        <h2
-            id="selectedDateTitle"
-            style="margin-bottom:20px"
-        >
-            Date
-        </h2>
+    </div>
 
 
-        <div class="field">
+    <!-- DAILY NOTE -->
 
-            <label>
-                Planned income
-            </label>
-
-            <input
-                id="expectedInput"
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="0"
-            >
-
-        </div>
+    <div class="divider"></div>
 
 
-        <div class="field">
+    <h3>
+        📝 Daily Notes
+    </h3>
 
-            <label>
-                Actual income
-            </label>
 
-            <input
-                id="actualInput"
-                type="number"
-                min="0"
-                step="0.01"
-                placeholder="0"
-            >
+    <textarea
+        id="dailyNote"
+        style="margin-top:10px"
+        placeholder="What happened today?"
+    ></textarea>
+
+
+    <!-- PROGRESS -->
+
+    <div class="dailyProgress">
+
+        <div class="progressText">
+
+            <span>
+                Daily Progress
+            </span>
+
+            <strong id="dailyTaskProgress">
+                0/0
+            </strong>
 
         </div>
 
+        <div class="progress">
 
-        <div class="modalButtons">
-
-            <button onclick="saveDate()">
-                Save
-            </button>
-
-            <button
-                class="secondary"
-                onclick="clearDate()"
-            >
-                Clear
-            </button>
+            <div
+                class="progressBar"
+                id="dailyProgressBar"
+            ></div>
 
         </div>
 
     </div>
+
+
+    <div class="modalButtons">
+
+        <button onclick="saveDate()">
+            Save Day
+        </button>
+
+        <button
+            class="secondary"
+            onclick="clearDate()"
+        >
+            Clear Day
+        </button>
+
+    </div>
+
+</div>
 
 </div>
 
@@ -1073,14 +1484,13 @@ main{
 <script>
 
 /* ==========================================================
-   DATABASE
+   FIREBASE
 ========================================================== */
 
 const DATABASE_URL =
     "https://app-1-2f56b-default-rtdb.firebaseio.com/";
 
-
-let database = null;
+let database=null;
 
 try{
 
@@ -1088,12 +1498,12 @@ try{
         databaseURL:DATABASE_URL
     });
 
-    database = firebase.database();
+    database=firebase.database();
 
 }catch(error){
 
     console.log(
-        "Firebase unavailable:",
+        "Firebase unavailable",
         error
     );
 
@@ -1104,14 +1514,12 @@ try{
    ACCOUNT
 ========================================================== */
 
-let currentUsername =
+let currentUsername=
     localStorage.getItem(
         "business_current_username"
     );
 
-
-const OWNER =
-    "cheezlove22";
+const OWNER="cheezlove22";
 
 
 function cleanUsername(value){
@@ -1119,21 +1527,24 @@ function cleanUsername(value){
     return value
         .trim()
         .toLowerCase()
-        .replace(/[^a-z0-9_-]/g,"");
+        .replace(
+            /[^a-z0-9_-]/g,
+            ""
+        );
 
 }
 
 
 function showAuthError(message){
 
-    const error =
+    const error=
         document.getElementById(
             "authError"
         );
 
     error.textContent=message;
 
-    error.style.display =
+    error.style.display=
         message ? "block":"none";
 
 }
@@ -1143,8 +1554,7 @@ function switchAuth(mode){
 
     showAuthError("");
 
-
-    const isContinue =
+    const continuing=
         mode==="continue";
 
 
@@ -1152,16 +1562,20 @@ function switchAuth(mode){
     .getElementById(
         "continueForm"
     )
-    .style.display =
-        isContinue ? "block":"none";
+    .style.display=
+        continuing
+        ? "block"
+        : "none";
 
 
     document
     .getElementById(
         "newForm"
     )
-    .style.display =
-        isContinue ? "none":"block";
+    .style.display=
+        continuing
+        ? "none"
+        : "block";
 
 
     document
@@ -1171,7 +1585,7 @@ function switchAuth(mode){
     .classList
     .toggle(
         "active",
-        isContinue
+        continuing
     );
 
 
@@ -1182,7 +1596,7 @@ function switchAuth(mode){
     .classList
     .toggle(
         "active",
-        !isContinue
+        !continuing
     );
 
 }
@@ -1192,8 +1606,7 @@ function createAccount(){
 
     showAuthError("");
 
-
-    const name =
+    const name=
         cleanUsername(
             document
             .getElementById(
@@ -1216,12 +1629,10 @@ function createAccount(){
 
     currentUsername=name;
 
-
     localStorage.setItem(
         "business_current_username",
         currentUsername
     );
-
 
     startApp();
 
@@ -1232,8 +1643,7 @@ function continueAccount(){
 
     showAuthError("");
 
-
-    const name =
+    const name=
         cleanUsername(
             document
             .getElementById(
@@ -1256,12 +1666,10 @@ function continueAccount(){
 
     currentUsername=name;
 
-
     localStorage.setItem(
         "business_current_username",
         currentUsername
     );
-
 
     startApp();
 
@@ -1280,13 +1688,14 @@ function logout(){
 
 
 /* ==========================================================
-   ACCOUNT-SPECIFIC LOCAL DATA
+   LOCAL DATA
 ========================================================== */
 
 function accountKey(){
 
-    return (
-        "business_data_"+currentUsername
+    return(
+        "business_data_"+
+        currentUsername
     );
 
 }
@@ -1294,8 +1703,19 @@ function accountKey(){
 
 function goalKey(){
 
-    return (
-        "business_goal_"+currentUsername
+    return(
+        "business_goal_"+
+        currentUsername
+    );
+
+}
+
+
+function notesKey(){
+
+    return(
+        "business_notes_"+
+        currentUsername
     );
 
 }
@@ -1310,7 +1730,7 @@ function loadMoneyData(){
 
     try{
 
-        moneyData =
+        moneyData=
             JSON.parse(
                 localStorage.getItem(
                     accountKey()
@@ -1324,7 +1744,7 @@ function loadMoneyData(){
     }
 
 
-    goal =
+    goal=
         Number(
             localStorage.getItem(
                 goalKey()
@@ -1343,7 +1763,6 @@ function saveMoneyData(){
         )
     );
 
-
     localStorage.setItem(
         goalKey(),
         goal
@@ -1353,7 +1772,7 @@ function saveMoneyData(){
 
 
 /* ==========================================================
-   APP START
+   START
 ========================================================== */
 
 function startApp(){
@@ -1370,14 +1789,9 @@ function startApp(){
     .getElementById(
         "headerUsername"
     )
-    .textContent =
+    .textContent=
         "@"+currentUsername;
 
-
-    /*
-       Analytics is visible only to
-       the requested owner username.
-    */
 
     if(
         currentUsername.toLowerCase()===
@@ -1390,18 +1804,12 @@ function startApp(){
         )
         .style.display="block";
 
-    }else{
-
-        document
-        .getElementById(
-            "analyticsButton"
-        )
-        .style.display="none";
-
     }
 
 
     loadMoneyData();
+
+    loadGeneralNotes();
 
     updateHome();
 
@@ -1420,12 +1828,13 @@ if(currentUsername){
 
 
 /* ==========================================================
-   HOME
+   MONEY
 ========================================================== */
 
 function money(value){
 
-    return "$"+
+    return(
+        "$"+
         Number(value||0)
         .toLocaleString(
             "en-US",
@@ -1433,10 +1842,15 @@ function money(value){
                 minimumFractionDigits:2,
                 maximumFractionDigits:2
             }
-        );
+        )
+    );
 
 }
 
+
+/* ==========================================================
+   HOME
+========================================================== */
 
 function updateHome(){
 
@@ -1445,31 +1859,84 @@ function updateHome(){
 
     let planned=0;
     let actual=0;
+    let completed=0;
+    let remaining=0;
+    let totalTasks=0;
 
 
-    Object.values(
+    let bestDate=null;
+    let bestCompleted=-1;
+
+
+    Object.entries(
         moneyData
     )
-    .forEach(day=>{
+    .forEach(
+        ([date,data])=>{
 
-        planned +=
-            Number(
-                day.expected||0
-            );
+            planned+=
+                Number(
+                    data.expected||0
+                );
 
-        actual +=
-            Number(
-                day.actual||0
-            );
 
-    });
+            actual+=
+                Number(
+                    data.actual||0
+                );
+
+
+            const tasks=
+                Array.isArray(data.tasks)
+                ? data.tasks
+                : [];
+
+
+            tasks.forEach(task=>{
+
+                totalTasks++;
+
+
+                if(task.done){
+
+                    completed++;
+
+                }else{
+
+                    remaining++;
+
+                }
+
+            });
+
+
+            const dayCompleted=
+                tasks.filter(
+                    task=>task.done
+                ).length;
+
+
+            if(
+                dayCompleted>bestCompleted &&
+                tasks.length>0
+            ){
+
+                bestCompleted=
+                    dayCompleted;
+
+                bestDate=date;
+
+            }
+
+        }
+    );
 
 
     document
     .getElementById(
         "plannedMoney"
     )
-    .textContent =
+    .textContent=
         money(planned);
 
 
@@ -1477,7 +1944,7 @@ function updateHome(){
     .getElementById(
         "actualMoney"
     )
-    .textContent =
+    .textContent=
         money(actual);
 
 
@@ -1485,7 +1952,7 @@ function updateHome(){
     .getElementById(
         "goalMoney"
     )
-    .textContent =
+    .textContent=
         money(goal);
 
 
@@ -1493,7 +1960,7 @@ function updateHome(){
     .getElementById(
         "remainingMoney"
     )
-    .textContent =
+    .textContent=
         money(
             Math.max(
                 0,
@@ -1506,11 +1973,11 @@ function updateHome(){
     .getElementById(
         "goalInput"
     )
-    .value =
+    .value=
         goal || "";
 
 
-    const percent =
+    const goalPercent=
         goal>0
         ? Math.min(
             100,
@@ -1523,16 +1990,16 @@ function updateHome(){
     .getElementById(
         "progressBar"
     )
-    .style.width =
-        percent+"%";
+    .style.width=
+        goalPercent+"%";
 
 
     document
     .getElementById(
         "goalPercent"
     )
-    .textContent =
-        percent.toFixed(1)+
+    .textContent=
+        goalPercent.toFixed(1)+
         "% complete";
 
 
@@ -1540,15 +2007,88 @@ function updateHome(){
     .getElementById(
         "goalMade"
     )
-    .textContent =
+    .textContent=
         money(actual)+" made";
+
+
+    document
+    .getElementById(
+        "tasksCompleted"
+    )
+    .textContent=
+        completed;
+
+
+    document
+    .getElementById(
+        "tasksRemaining"
+    )
+    .textContent=
+        remaining;
+
+
+    const taskPercent=
+        totalTasks>0
+        ? completed/
+          totalTasks*
+          100
+        : 0;
+
+
+    document
+    .getElementById(
+        "taskCompletion"
+    )
+    .textContent=
+        taskPercent.toFixed(0)+"%";
+
+
+    document
+    .getElementById(
+        "bestDay"
+    )
+    .textContent=
+        bestDate
+        ? formatShortDate(bestDate)
+        : "None";
+
+
+    document
+    .getElementById(
+        "productivityPlanned"
+    )
+    .textContent=
+        money(planned);
+
+
+    document
+    .getElementById(
+        "productivityActual"
+    )
+    .textContent=
+        money(actual);
+
+}
+
+
+function formatShortDate(key){
+
+    return new Date(
+        key+"T12:00:00"
+    ).toLocaleDateString(
+        "en-US",
+        {
+            month:"short",
+            day:"numeric"
+        }
+    );
 
 }
 
 
 function saveGoal(){
 
-    goal =
+    goal=
         Number(
             document
             .getElementById(
@@ -1573,7 +2113,10 @@ function showPage(name){
 
     if(
         name==="analytics" &&
-        currentUsername.toLowerCase()!==OWNER
+        (
+            !currentUsername ||
+            currentUsername.toLowerCase()!==OWNER
+        )
     ){
 
         name="home";
@@ -1592,13 +2135,15 @@ function showPage(name){
     });
 
 
-    const page =
+    const selected=
         document.getElementById(name);
 
 
-    if(page){
+    if(selected){
 
-        page.classList.add("active");
+        selected.classList.add(
+            "active"
+        );
 
     }
 
@@ -1619,6 +2164,13 @@ function showPage(name){
     }
 
 
+    if(name==="notes"){
+
+        loadGeneralNotes();
+
+    }
+
+
     if(name==="analytics"){
 
         loadAnalytics();
@@ -1632,16 +2184,15 @@ function showPage(name){
    CALENDAR
 ========================================================== */
 
-let calendarDate =
+let calendarDate=
     new Date();
-
 
 let selectedDate=null;
 
 
 function dateKey(date){
 
-    return (
+    return(
         date.getFullYear()+
         "-"+
         String(
@@ -1672,7 +2223,7 @@ function renderCalendar(){
     loadMoneyData();
 
 
-    const grid =
+    const grid=
         document.getElementById(
             "calendarGrid"
         );
@@ -1681,11 +2232,10 @@ function renderCalendar(){
     grid.innerHTML="";
 
 
-    const year =
+    const year=
         calendarDate.getFullYear();
 
-
-    const month =
+    const month=
         calendarDate.getMonth();
 
 
@@ -1693,7 +2243,7 @@ function renderCalendar(){
     .getElementById(
         "monthTitle"
     )
-    .textContent =
+    .textContent=
         calendarDate.toLocaleDateString(
             "en-US",
             {
@@ -1703,7 +2253,7 @@ function renderCalendar(){
         );
 
 
-    const weekdays=[
+    [
         "Sun",
         "Mon",
         "Tue",
@@ -1711,12 +2261,10 @@ function renderCalendar(){
         "Thu",
         "Fri",
         "Sat"
-    ];
+    ]
+    .forEach(name=>{
 
-
-    weekdays.forEach(name=>{
-
-        const cell =
+        const cell=
             document.createElement(
                 "div"
             );
@@ -1730,7 +2278,7 @@ function renderCalendar(){
     });
 
 
-    const firstDay =
+    const firstDay=
         new Date(
             year,
             month,
@@ -1738,7 +2286,7 @@ function renderCalendar(){
         ).getDay();
 
 
-    const totalDays =
+    const totalDays=
         new Date(
             year,
             month+1,
@@ -1746,17 +2294,13 @@ function renderCalendar(){
         ).getDate();
 
 
-    /*
-       Blank cells before the first day.
-    */
-
     for(
         let i=0;
         i<firstDay;
         i++
     ){
 
-        const blank =
+        const blank=
             document.createElement(
                 "div"
             );
@@ -1769,7 +2313,7 @@ function renderCalendar(){
     }
 
 
-    const today =
+    const today=
         dateKey(
             new Date()
         );
@@ -1781,7 +2325,7 @@ function renderCalendar(){
         day++
     ){
 
-        const key =
+        const key=
             year+
             "-"+
             String(
@@ -1791,11 +2335,10 @@ function renderCalendar(){
             String(day).padStart(2,"0");
 
 
-        const cell =
+        const cell=
             document.createElement(
                 "div"
             );
-
 
         cell.className="day";
 
@@ -1809,7 +2352,11 @@ function renderCalendar(){
         }
 
 
-        const number =
+        const data=
+            moneyData[key] || {};
+
+
+        const number=
             document.createElement(
                 "div"
             );
@@ -1819,15 +2366,40 @@ function renderCalendar(){
 
         number.textContent=day;
 
-
         cell.appendChild(number);
 
 
-        const saved =
-            moneyData[key] || {};
+        const tasks=
+            Array.isArray(data.tasks)
+            ? data.tasks
+            : [];
 
 
-        const expected =
+        const allComplete=
+            tasks.length>0 &&
+            tasks.every(
+                task=>task.done
+            );
+
+
+        if(allComplete){
+
+            const badge=
+                document.createElement(
+                    "div"
+                );
+
+            badge.className=
+                "completeBadge";
+
+            badge.textContent="✅";
+
+            cell.appendChild(badge);
+
+        }
+
+
+        const expected=
             document.createElement(
                 "div"
             );
@@ -1835,20 +2407,19 @@ function renderCalendar(){
         expected.className=
             "dayMoney";
 
-        expected.textContent =
+        expected.textContent=
             money(
-                saved.expected||0
+                data.expected||0
             );
-
 
         cell.appendChild(expected);
 
 
         if(
-            Number(saved.actual||0)>0
+            Number(data.actual||0)>0
         ){
 
-            const actual =
+            const actual=
                 document.createElement(
                     "div"
                 );
@@ -1856,12 +2427,34 @@ function renderCalendar(){
             actual.className=
                 "dayActual";
 
-            actual.textContent =
+            actual.textContent=
                 "Made "+
-                money(saved.actual);
-
+                money(data.actual);
 
             cell.appendChild(actual);
+
+        }
+
+
+        if(tasks.length>0){
+
+            const taskCount=
+                document.createElement(
+                    "div"
+                );
+
+            taskCount.className=
+                "dayActual";
+
+            taskCount.textContent=
+                tasks.filter(
+                    task=>task.done
+                ).length+
+                "/"+
+                tasks.length+
+                " tasks";
+
+            cell.appendChild(taskCount);
 
         }
 
@@ -1881,7 +2474,7 @@ function renderCalendar(){
 
 
 /* ==========================================================
-   DATE EDITOR
+   DAILY PLANNER
 ========================================================== */
 
 function openDate(key){
@@ -1889,7 +2482,7 @@ function openDate(key){
     selectedDate=key;
 
 
-    const saved =
+    const data=
         moneyData[key] || {};
 
 
@@ -1897,7 +2490,7 @@ function openDate(key){
     .getElementById(
         "selectedDateTitle"
     )
-    .textContent =
+    .textContent=
         new Date(
             key+"T12:00:00"
         ).toLocaleDateString(
@@ -1915,16 +2508,27 @@ function openDate(key){
     .getElementById(
         "expectedInput"
     )
-    .value =
-        saved.expected || "";
+    .value=
+        data.expected || "";
 
 
     document
     .getElementById(
         "actualInput"
     )
-    .value =
-        saved.actual || "";
+    .value=
+        data.actual || "";
+
+
+    document
+    .getElementById(
+        "dailyNote"
+    )
+    .value=
+        data.note || "";
+
+
+    renderTasks();
 
 
     document
@@ -1946,8 +2550,293 @@ function closeDateModal(){
     .classList
     .remove("show");
 
+    selectedDate=null;
+
 }
 
+
+/* ==========================================================
+   TASKS
+========================================================== */
+
+function renderTasks(){
+
+    const list=
+        document.getElementById(
+            "taskList"
+        );
+
+
+    list.innerHTML="";
+
+
+    if(!selectedDate)
+        return;
+
+
+    const data=
+        moneyData[selectedDate] || {};
+
+
+    if(!Array.isArray(data.tasks))
+        data.tasks=[];
+
+
+    if(data.tasks.length===0){
+
+        list.innerHTML=
+            '<div class="small" style="padding:10px 0">No tasks yet. Add one below.</div>';
+
+    }
+
+
+    data.tasks.forEach(
+        (task,index)=>{
+
+            const row=
+                document.createElement(
+                    "div"
+                );
+
+            row.className=
+                "task"+
+                (task.done
+                    ? " done"
+                    : "");
+
+
+            const checkbox=
+                document.createElement(
+                    "input"
+                );
+
+            checkbox.type="checkbox";
+
+            checkbox.checked=
+                !!task.done;
+
+
+            checkbox.onchange=()=>{
+
+                moneyData[
+                    selectedDate
+                ].tasks[index].done=
+                    checkbox.checked;
+
+
+                renderTasks();
+
+                updateDailyProgress();
+
+                renderCalendar();
+
+                updateHome();
+
+                saveMoneyData();
+
+            };
+
+
+            const text=
+                document.createElement(
+                    "div"
+                );
+
+            text.className="taskText";
+
+            text.textContent=
+                task.text;
+
+
+            const remove=
+                document.createElement(
+                    "button"
+                );
+
+            remove.className=
+                "deleteTask";
+
+            remove.textContent="×";
+
+
+            remove.onclick=()=>{
+
+                moneyData[
+                    selectedDate
+                ].tasks.splice(
+                    index,
+                    1
+                );
+
+
+                renderTasks();
+
+                updateDailyProgress();
+
+                renderCalendar();
+
+                updateHome();
+
+                saveMoneyData();
+
+            };
+
+
+            row.appendChild(checkbox);
+
+            row.appendChild(text);
+
+            row.appendChild(remove);
+
+            list.appendChild(row);
+
+        }
+    );
+
+
+    updateDailyProgress();
+
+}
+
+
+function addTask(){
+
+    if(!selectedDate)
+        return;
+
+
+    const input=
+        document.getElementById(
+            "newTaskInput"
+        );
+
+
+    const text=
+        input.value.trim();
+
+
+    if(!text)
+        return;
+
+
+    if(!moneyData[selectedDate]){
+
+        moneyData[selectedDate]={};
+
+    }
+
+
+    if(
+        !Array.isArray(
+            moneyData[selectedDate].tasks
+        )
+    ){
+
+        moneyData[selectedDate].tasks=[];
+
+    }
+
+
+    moneyData[selectedDate]
+    .tasks
+    .push({
+
+        text:text,
+
+        done:false
+
+    });
+
+
+    input.value="";
+
+
+    saveMoneyData();
+
+    renderTasks();
+
+    renderCalendar();
+
+    updateHome();
+
+}
+
+
+document
+.getElementById(
+    "newTaskInput"
+)
+.addEventListener(
+    "keydown",
+    event=>{
+
+        if(event.key==="Enter"){
+
+            addTask();
+
+        }
+
+    }
+);
+
+
+/* ==========================================================
+   DAILY PROGRESS
+========================================================== */
+
+function updateDailyProgress(){
+
+    if(!selectedDate)
+        return;
+
+
+    const data=
+        moneyData[selectedDate] || {};
+
+
+    const tasks=
+        Array.isArray(data.tasks)
+        ? data.tasks
+        : [];
+
+
+    const completed=
+        tasks.filter(
+            task=>task.done
+        ).length;
+
+
+    const total=
+        tasks.length;
+
+
+    document
+    .getElementById(
+        "dailyTaskProgress"
+    )
+    .textContent=
+        completed+"/"+total;
+
+
+    const percent=
+        total>0
+        ? completed/total*100
+        : 0;
+
+
+    document
+    .getElementById(
+        "dailyProgressBar"
+    )
+    .style.width=
+        percent+"%";
+
+}
+
+
+/* ==========================================================
+   SAVE DAILY PLANNER
+========================================================== */
 
 function saveDate(){
 
@@ -1955,7 +2844,14 @@ function saveDate(){
         return;
 
 
-    const expected =
+    if(!moneyData[selectedDate]){
+
+        moneyData[selectedDate]={};
+
+    }
+
+
+    moneyData[selectedDate].expected=
         Number(
             document
             .getElementById(
@@ -1965,7 +2861,7 @@ function saveDate(){
         );
 
 
-    const actual =
+    moneyData[selectedDate].actual=
         Number(
             document
             .getElementById(
@@ -1975,19 +2871,23 @@ function saveDate(){
         );
 
 
-    moneyData[selectedDate]={
-
-        expected:Math.max(
-            0,
-            expected
-        ),
-
-        actual:Math.max(
-            0,
-            actual
+    moneyData[selectedDate].note=
+        document
+        .getElementById(
+            "dailyNote"
         )
+        .value;
 
-    };
+
+    if(
+        !Array.isArray(
+            moneyData[selectedDate].tasks
+        )
+    ){
+
+        moneyData[selectedDate].tasks=[];
+
+    }
 
 
     saveMoneyData();
@@ -2017,6 +2917,61 @@ function clearDate(){
     renderCalendar();
 
     updateHome();
+
+}
+
+
+/* ==========================================================
+   GENERAL NOTES
+========================================================== */
+
+function loadGeneralNotes(){
+
+    const notes=
+        localStorage.getItem(
+            notesKey()
+        ) || "";
+
+
+    document
+    .getElementById(
+        "generalNotes"
+    )
+    .value=notes;
+
+}
+
+
+function saveGeneralNotes(){
+
+    localStorage.setItem(
+        notesKey(),
+        document
+        .getElementById(
+            "generalNotes"
+        )
+        .value
+    );
+
+
+    const message=
+        document.getElementById(
+            "notesSaved"
+        );
+
+
+    message.classList.add(
+        "show"
+    );
+
+
+    setTimeout(()=>{
+
+        message.classList.remove(
+            "show"
+        );
+
+    },1500);
 
 }
 
@@ -2059,10 +3014,10 @@ if(
 
 
 /* ==========================================================
-   ANONYMOUS ANALYTICS ID
+   ANONYMOUS WEBSITE VISITOR ID
 ========================================================== */
 
-let visitorID =
+let visitorID=
     localStorage.getItem(
         "business_visitor_id"
     );
@@ -2075,18 +3030,16 @@ if(!visitorID){
         crypto.randomUUID
     ){
 
-        visitorID =
+        visitorID=
             crypto.randomUUID();
 
     }else{
 
-        visitorID =
+        visitorID=
             "visitor_"+
-
             Math.random()
             .toString(36)
             .substring(2)+
-
             Date.now();
 
     }
@@ -2101,7 +3054,7 @@ if(!visitorID){
 
 
 /* ==========================================================
-   ANALYTICS TRACKING
+   FIREBASE ANALYTICS
 ========================================================== */
 
 async function setupAnalytics(){
@@ -2112,7 +3065,7 @@ async function setupAnalytics(){
 
     try{
 
-        const presence =
+        const presence=
             database.ref(
                 "analytics/presence/"+
                 visitorID
@@ -2131,11 +3084,6 @@ async function setupAnalytics(){
 
         });
 
-
-        /*
-           Firebase marks this browser offline
-           when the connection disappears.
-        */
 
         presence
         .onDisconnect()
@@ -2172,7 +3120,7 @@ async function recordDailyActivity(){
         return;
 
 
-    const today =
+    const today=
         dateKey(
             new Date()
         );
@@ -2180,24 +3128,14 @@ async function recordDailyActivity(){
 
     try{
 
-        await database
-        .ref(
-            "analytics/users/"+
-            visitorID+
-            "/activity/"+
-            today
-        )
-        .set(true);
-
-
-        const userRef =
+        const userRef=
             database.ref(
                 "analytics/users/"+
                 visitorID
             );
 
 
-        const snapshot =
+        const snapshot=
             await userRef.once(
                 "value"
             );
@@ -2237,17 +3175,32 @@ async function recordDailyActivity(){
 
             });
 
+
+            await database
+            .ref(
+                "analytics/users/"+
+                visitorID+
+                "/activity/"+
+                today
+            )
+            .set(true);
+
         }
 
 
-        await updateDailyUserCount(today);
+        await updateDailyUserCount(
+            today
+        );
 
-        await updateConcurrentCount(today);
+
+        await updateConcurrentCount(
+            today
+        );
 
     }catch(error){
 
         console.log(
-            "Daily analytics error:",
+            "Analytics error:",
             error
         );
 
@@ -2256,23 +3209,21 @@ async function recordDailyActivity(){
 }
 
 
-/*
-   Count unique users for today's chart.
-*/
-
 async function updateDailyUserCount(today){
 
     try{
 
-        const snapshot =
+        const snapshot=
             await database
             .ref(
                 "analytics/users"
             )
-            .once("value");
+            .once(
+                "value"
+            );
 
 
-        const allUsers =
+        const users=
             snapshot.val() || {};
 
 
@@ -2280,7 +3231,7 @@ async function updateDailyUserCount(today){
 
 
         Object.values(
-            allUsers
+            users
         )
         .forEach(user=>{
 
@@ -2314,24 +3265,21 @@ async function updateDailyUserCount(today){
 }
 
 
-/*
-   Find how many browsers are currently online
-   and save today's maximum.
-*/
-
 async function updateConcurrentCount(today){
 
     try{
 
-        const snapshot =
+        const snapshot=
             await database
             .ref(
                 "analytics/presence"
             )
-            .once("value");
+            .once(
+                "value"
+            );
 
 
-        const presence =
+        const presence=
             snapshot.val() || {};
 
 
@@ -2355,7 +3303,7 @@ async function updateConcurrentCount(today){
         });
 
 
-        const maxRef =
+        const maxRef=
             database.ref(
                 "analytics/daily/"+
                 today+
@@ -2363,15 +3311,15 @@ async function updateConcurrentCount(today){
             );
 
 
-        const maxSnapshot =
+        const oldSnapshot=
             await maxRef.once(
                 "value"
             );
 
 
-        const oldMax =
+        const oldMax=
             Number(
-                maxSnapshot.val() || 0
+                oldSnapshot.val() || 0
             );
 
 
@@ -2392,15 +3340,14 @@ async function updateConcurrentCount(today){
 }
 
 
-/*
-   Heartbeat every 15 seconds.
-*/
+/* HEARTBEAT */
 
 setInterval(
     async()=>{
-        
+
         if(!database)
             return;
+
 
         try{
 
@@ -2420,6 +3367,7 @@ setInterval(
                     .TIMESTAMP
 
             });
+
 
             await recordDailyActivity();
 
@@ -2445,15 +3393,15 @@ let weeklyChart=null;
 
 function getWeekDates(offset){
 
-    const now =
+    const now=
         new Date();
 
 
-    const day =
+    const day=
         now.getDay();
 
 
-    const monday =
+    const monday=
         new Date(now);
 
 
@@ -2465,10 +3413,7 @@ function getWeekDates(offset){
 
 
     monday.setHours(
-        0,
-        0,
-        0,
-        0
+        0,0,0,0
     );
 
 
@@ -2481,7 +3426,7 @@ function getWeekDates(offset){
         i++
     ){
 
-        const d =
+        const d=
             new Date(monday);
 
 
@@ -2505,11 +3450,8 @@ async function loadAnalytics(){
     if(
         !currentUsername ||
         currentUsername.toLowerCase()!==OWNER
-    ){
-
+    )
         return;
-
-    }
 
 
     if(!database){
@@ -2532,7 +3474,7 @@ async function loadAnalytics(){
             presenceSnap,
             usersSnap,
             dailySnap
-        ] =
+        ]=
         await Promise.all([
 
             database
@@ -2556,19 +3498,17 @@ async function loadAnalytics(){
         ]);
 
 
-        const presence =
+        const presence=
             presenceSnap.val() || {};
 
 
-        const users =
+        const users=
             usersSnap.val() || {};
 
 
-        const daily =
+        const daily=
             dailySnap.val() || {};
 
-
-        /* CURRENT ONLINE */
 
         let online=0;
 
@@ -2590,23 +3530,21 @@ async function loadAnalytics(){
         });
 
 
-        /* WEEKS */
-
-        const thisWeek =
+        const currentWeek=
             getWeekDates(0)
             .map(dateKey);
 
 
-        const lastWeek =
+        const previousWeek=
             getWeekDates(-1)
             .map(dateKey);
 
 
-        const currentUsers =
+        const currentUsers=
             new Set();
 
 
-        const previousUsers =
+        const previousUsers=
             new Set();
 
 
@@ -2629,7 +3567,7 @@ async function loadAnalytics(){
                 .forEach(day=>{
 
                     if(
-                        thisWeek.includes(day)
+                        currentWeek.includes(day)
                     ){
 
                         currentUsers.add(id);
@@ -2638,7 +3576,7 @@ async function loadAnalytics(){
 
 
                     if(
-                        lastWeek.includes(day)
+                        previousWeek.includes(day)
                     ){
 
                         previousUsers.add(id);
@@ -2650,8 +3588,6 @@ async function loadAnalytics(){
             }
         );
 
-
-        /* RETURNED USERS */
 
         let returned=0;
 
@@ -2669,7 +3605,7 @@ async function loadAnalytics(){
         });
 
 
-        const retention =
+        const retention=
             previousUsers.size>0
             ? returned/
               previousUsers.size*
@@ -2725,10 +3661,7 @@ async function loadAnalytics(){
             .toLocaleTimeString();
 
 
-        drawCharts(
-            daily
-        );
-
+        drawCharts(daily);
 
     }catch(error){
 
@@ -2752,11 +3685,11 @@ async function loadAnalytics(){
 
 function drawCharts(daily){
 
-    const dates =
+    const dates=
         getWeekDates(0);
 
 
-    const labels =
+    const labels=
         dates.map(date=>
             date.toLocaleDateString(
                 "en-US",
@@ -2767,11 +3700,11 @@ function drawCharts(daily){
         );
 
 
-    const keys =
+    const keys=
         dates.map(dateKey);
 
 
-    const concurrent =
+    const concurrent=
         keys.map(key=>
             Number(
                 daily[key]?.concurrent || 0
@@ -2779,7 +3712,7 @@ function drawCharts(daily){
         );
 
 
-    const active =
+    const active=
         keys.map(key=>
             Number(
                 daily[key]?.activeUsers || 0
@@ -2801,11 +3734,10 @@ function drawCharts(daily){
     }
 
 
-    concurrentChart =
+    concurrentChart=
         new Chart(
 
-            document
-            .getElementById(
+            document.getElementById(
                 "concurrentChart"
             ),
 
@@ -2845,11 +3777,10 @@ function drawCharts(daily){
         );
 
 
-    weeklyChart =
+    weeklyChart=
         new Chart(
 
-            document
-            .getElementById(
+            document.getElementById(
                 "weeklyChart"
             ),
 
@@ -2887,9 +3818,7 @@ function drawCharts(daily){
 }
 
 
-/*
-   Keep analytics dashboard fresh.
-*/
+/* ANALYTICS REFRESH */
 
 setInterval(()=>{
 
