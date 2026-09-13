@@ -2,46 +2,51 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Business Money Manager</title>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
-    font-family:Arial,sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 :root{
-    --bg:#fff;
+    --bg:#ffffff;
     --card:#f7f7f7;
-    --text:#111;
-    --muted:#777;
-    --border:#ddd;
-    --button:#111;
-    --buttonText:#fff;
+    --text:#111111;
+    --muted:#777777;
+    --border:#dddddd;
+    --button:#111111;
+    --buttonText:#ffffff;
     --green:#16a34a;
+    --red:#dc2626;
 }
 
 body.dark{
-    --bg:#0c0c0c;
+    --bg:#0b0b0b;
     --card:#181818;
-    --text:#fff;
-    --muted:#999;
+    --text:#ffffff;
+    --muted:#999999;
     --border:#303030;
-    --button:#fff;
-    --buttonText:#111;
+    --button:#ffffff;
+    --buttonText:#111111;
+}
+
+html,body{
+    min-height:100%;
 }
 
 body{
     background:var(--bg);
     color:var(--text);
-    min-height:100vh;
+    transition:.2s;
 }
 
 button{
@@ -52,6 +57,10 @@ button{
     color:var(--buttonText);
     font-weight:bold;
     cursor:pointer;
+}
+
+button:active{
+    transform:scale(.97);
 }
 
 .secondary{
@@ -68,52 +77,82 @@ input{
     background:var(--bg);
     color:var(--text);
     font-size:16px;
+    outline:none;
 }
+
+input:focus{
+    border-color:var(--text);
+}
+
+/* ACCOUNT */
 
 .auth{
     position:fixed;
     inset:0;
-    z-index:1000;
+    z-index:9999;
+    background:var(--bg);
     display:flex;
     align-items:center;
     justify-content:center;
     padding:20px;
-    background:var(--bg);
 }
 
 .auth.hidden{
     display:none;
 }
 
-.auth-card{
+.authCard{
     width:100%;
-    max-width:390px;
+    max-width:400px;
     background:var(--card);
     border:1px solid var(--border);
     border-radius:22px;
     padding:28px;
 }
 
-.auth-card h1{
-    margin-bottom:8px;
+.authLogo{
+    font-size:45px;
+    margin-bottom:10px;
 }
 
-.auth-card p{
+.authCard h1{
+    font-size:28px;
+    margin-bottom:7px;
+}
+
+.authCard p{
     color:var(--muted);
+    line-height:1.5;
     margin-bottom:22px;
 }
 
-.auth-tabs{
+.tabs{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:8px;
     margin-bottom:20px;
 }
 
-.auth-tabs button:not(.active){
+.tabs button{
     background:transparent;
     color:var(--text);
     border:1px solid var(--border);
+}
+
+.tabs button.active{
+    background:var(--button);
+    color:var(--buttonText);
+    border-color:var(--button);
+}
+
+.error{
+    display:none;
+    background:#fee2e2;
+    color:#991b1b;
+    padding:11px;
+    border-radius:10px;
+    margin-bottom:14px;
+    font-size:13px;
 }
 
 .field{
@@ -122,40 +161,37 @@ input{
 
 .field label{
     display:block;
-    font-size:13px;
     color:var(--muted);
+    font-size:13px;
     margin-bottom:6px;
 }
 
-.error{
-    background:#fee2e2;
-    color:#991b1b;
-    padding:10px;
-    border-radius:10px;
-    font-size:13px;
-    margin-bottom:14px;
-    display:none;
-}
+/* HEADER */
 
 header{
     position:sticky;
     top:0;
-    z-index:50;
+    z-index:100;
     background:var(--bg);
     border-bottom:1px solid var(--border);
-    padding:14px;
+    padding:13px 15px;
+}
+
+.headerInner{
+    max-width:1100px;
+    margin:auto;
     display:flex;
     align-items:center;
-    gap:15px;
+    gap:14px;
+    flex-wrap:wrap;
 }
 
 .logo{
     font-size:20px;
     font-weight:bold;
-    white-space:nowrap;
 }
 
-.user{
+.username{
     color:var(--muted);
     font-size:13px;
     margin-left:auto;
@@ -169,12 +205,15 @@ nav{
 
 nav button{
     white-space:nowrap;
+    padding:9px 12px;
 }
+
+/* MAIN */
 
 main{
     max-width:1100px;
     margin:auto;
-    padding:25px 16px 60px;
+    padding:28px 16px 70px;
 }
 
 .page{
@@ -186,13 +225,14 @@ main{
 }
 
 .title{
-    font-size:28px;
+    font-size:29px;
     font-weight:bold;
 }
 
 .subtitle{
     color:var(--muted);
-    margin:5px 0 22px;
+    margin-top:5px;
+    margin-bottom:23px;
 }
 
 .cards{
@@ -208,14 +248,14 @@ main{
     padding:20px;
 }
 
-.card-title{
+.cardTitle{
     color:var(--muted);
     font-size:13px;
     margin-bottom:8px;
 }
 
 .big{
-    font-size:30px;
+    font-size:29px;
     font-weight:bold;
 }
 
@@ -232,16 +272,17 @@ main{
     background:var(--border);
     border-radius:20px;
     overflow:hidden;
-    margin-top:15px;
+    margin-top:16px;
 }
 
-.progress-bar{
+.progressBar{
+    width:0%;
     height:100%;
-    width:0;
     background:var(--green);
+    transition:.3s;
 }
 
-.goal-info{
+.goalInfo{
     display:flex;
     justify-content:space-between;
     color:var(--muted);
@@ -251,21 +292,23 @@ main{
 
 /* CALENDAR */
 
-.calendar-head{
+.calendarTop{
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    margin-bottom:15px;
+    justify-content:space-between;
+    margin-bottom:16px;
 }
 
-.month{
+.monthTitle{
     font-size:21px;
     font-weight:bold;
+    text-align:center;
 }
 
 .calendar{
+    width:100%;
     display:grid;
-    grid-template-columns:repeat(7,1fr);
+    grid-template-columns:repeat(7,minmax(0,1fr));
     gap:6px;
 }
 
@@ -273,17 +316,26 @@ main{
     text-align:center;
     color:var(--muted);
     font-size:12px;
-    padding:8px 0;
     font-weight:bold;
+    padding:8px 2px;
 }
 
 .day{
+    display:block;
+    min-width:0;
     min-height:95px;
+    padding:9px;
     background:var(--card);
+    color:var(--text);
     border:1px solid var(--border);
     border-radius:12px;
-    padding:8px;
     cursor:pointer;
+    visibility:visible;
+    opacity:1;
+}
+
+.day:hover{
+    border-color:var(--text);
 }
 
 .day.empty{
@@ -292,40 +344,50 @@ main{
     cursor:default;
 }
 
-.day.today{
-    outline:2px solid var(--text);
-}
-
-.day-money{
-    margin-top:16px;
-    font-size:12px;
+.dayNumber{
+    color:var(--text);
+    font-size:13px;
     font-weight:bold;
 }
 
-.day-actual{
-    margin-top:4px;
+.dayMoney{
+    color:var(--text);
+    font-size:12px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.dayActual{
     color:var(--green);
     font-size:10px;
+    font-weight:bold;
+    margin-top:4px;
+}
+
+.today{
+    outline:2px solid var(--text);
+    outline-offset:-2px;
 }
 
 /* ANALYTICS */
 
-.live{
+.liveBox{
     background:var(--card);
     border:1px solid var(--border);
     border-radius:15px;
     padding:15px;
     display:flex;
-    gap:10px;
     align-items:center;
+    gap:10px;
     margin-bottom:18px;
 }
 
-.dot{
+.liveDot{
     width:11px;
     height:11px;
-    border-radius:50%;
     background:#22c55e;
+    border-radius:50%;
+    flex:none;
 }
 
 .small{
@@ -334,19 +396,18 @@ main{
 }
 
 .chart{
-    margin-top:18px;
     background:var(--card);
     border:1px solid var(--border);
     border-radius:17px;
     padding:18px;
+    margin-top:18px;
 }
 
 .chart h2{
     font-size:19px;
-    margin-bottom:4px;
 }
 
-.chart-box{
+.chartBox{
     height:300px;
     margin-top:15px;
 }
@@ -356,11 +417,11 @@ main{
 .modal{
     position:fixed;
     inset:0;
-    z-index:500;
+    z-index:1000;
+    background:rgba(0,0,0,.65);
     display:none;
     align-items:center;
     justify-content:center;
-    background:rgba(0,0,0,.65);
     padding:20px;
 }
 
@@ -368,10 +429,11 @@ main{
     display:flex;
 }
 
-.modal-card{
+.modalCard{
     width:100%;
     max-width:420px;
     background:var(--bg);
+    color:var(--text);
     border:1px solid var(--border);
     border-radius:20px;
     padding:22px;
@@ -381,26 +443,31 @@ main{
     float:right;
     background:transparent;
     color:var(--text);
-    font-size:22px;
+    font-size:25px;
     padding:0 5px;
 }
 
-.modal-buttons{
-    display:flex;
+.modalButtons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
     gap:10px;
 }
 
-.modal-buttons button{
-    flex:1;
-}
-
-@media(max-width:700px){
+@media(max-width:650px){
 
     header{
-        flex-wrap:wrap;
+        padding:11px;
     }
 
-    .user{
+    .headerInner{
+        gap:8px;
+    }
+
+    .logo{
+        width:100%;
+    }
+
+    .username{
         margin-left:0;
     }
 
@@ -410,21 +477,42 @@ main{
 
     nav button{
         font-size:12px;
-        padding:10px 9px;
+        padding:9px;
+    }
+
+    main{
+        padding-top:22px;
+    }
+
+    .title{
+        font-size:25px;
+    }
+
+    .calendar{
+        gap:4px;
     }
 
     .day{
-        min-height:70px;
-        padding:5px;
+        min-height:73px;
+        padding:6px;
+        border-radius:9px;
     }
 
-    .day-money{
-        margin-top:8px;
-        font-size:10px;
+    .dayNumber{
+        font-size:11px;
     }
 
-    .day-actual{
+    .dayMoney{
+        margin-top:9px;
         font-size:9px;
+    }
+
+    .dayActual{
+        font-size:8px;
+    }
+
+    .weekday{
+        font-size:10px;
     }
 }
 </style>
@@ -436,29 +524,29 @@ main{
 
 <div class="auth" id="authScreen">
 
-    <div class="auth-card">
+    <div class="authCard">
 
-        <div style="font-size:42px;margin-bottom:8px;">💰</div>
+        <div class="authLogo">💰</div>
 
         <h1>Business Manager</h1>
 
         <p>
-            Choose a username to enter your business dashboard.
+            Create a username or continue with one you've already used on this device.
         </p>
 
-        <div class="auth-tabs">
+        <div class="tabs">
 
             <button
-                id="loginTab"
+                id="continueTab"
                 class="active"
-                onclick="authMode('login')"
+                onclick="switchAuth('continue')"
             >
                 Continue
             </button>
 
             <button
-                id="createTab"
-                onclick="authMode('create')"
+                id="newTab"
+                onclick="switchAuth('new')"
             >
                 New Account
             </button>
@@ -470,24 +558,22 @@ main{
             id="authError"
         ></div>
 
-        <!-- LOGIN -->
-
-        <div id="loginForm">
+        <div id="continueForm">
 
             <div class="field">
 
                 <label>Username</label>
 
                 <input
-                    id="loginUsername"
+                    id="continueUsername"
                     maxlength="30"
-                    placeholder="Your username"
+                    placeholder="Enter username"
                 >
 
             </div>
 
             <button
-                style="width:100%;"
+                style="width:100%"
                 onclick="continueAccount()"
             >
                 Continue
@@ -495,11 +581,9 @@ main{
 
         </div>
 
-        <!-- CREATE -->
-
         <div
-            id="createForm"
-            style="display:none;"
+            id="newForm"
+            style="display:none"
         >
 
             <div class="field">
@@ -509,14 +593,14 @@ main{
                 <input
                     id="newUsername"
                     maxlength="30"
-                    placeholder="Example: Xavier123"
+                    placeholder="Example: mybusiness"
                 >
 
             </div>
 
             <button
-                style="width:100%;"
-                onclick="createLocalAccount()"
+                style="width:100%"
+                onclick="createAccount()"
             >
                 Create Account
             </button>
@@ -528,50 +612,56 @@ main{
 </div>
 
 
+<!-- HEADER -->
+
 <header>
 
-    <div class="logo">
-        💰 Business Manager
+    <div class="headerInner">
+
+        <div class="logo">
+            💰 Business Manager
+        </div>
+
+        <div
+            class="username"
+            id="headerUsername"
+        ></div>
+
+        <nav>
+
+            <button onclick="showPage('home')">
+                Home
+            </button>
+
+            <button onclick="showPage('calendar')">
+                🗓️ Calendar
+            </button>
+
+            <button
+                id="analyticsButton"
+                style="display:none"
+                onclick="showPage('analytics')"
+            >
+                📊 Analytics
+            </button>
+
+            <button
+                class="secondary"
+                onclick="toggleDark()"
+            >
+                🌙
+            </button>
+
+            <button
+                class="secondary"
+                onclick="logout()"
+            >
+                Log Out
+            </button>
+
+        </nav>
+
     </div>
-
-    <div
-        class="user"
-        id="currentUser"
-    ></div>
-
-    <nav>
-
-        <button onclick="page('home')">
-            Home
-        </button>
-
-        <button onclick="page('calendar')">
-            Calendar
-        </button>
-
-        <button
-            id="analyticsButton"
-            style="display:none;"
-            onclick="page('analytics')"
-        >
-            📊 Analytics
-        </button>
-
-        <button
-            class="secondary"
-            onclick="darkMode()"
-        >
-            🌙
-        </button>
-
-        <button
-            class="secondary"
-            onclick="logout()"
-        >
-            Log Out
-        </button>
-
-    </nav>
 
 </header>
 
@@ -590,69 +680,65 @@ main{
     </div>
 
     <div class="subtitle">
-        Plan your money and track your goals.
+        Plan your income and track your goals.
     </div>
-
 
     <div class="cards">
 
         <div class="card">
 
-            <div class="card-title">
+            <div class="cardTitle">
                 Planned Income
             </div>
 
             <div
                 class="big"
-                id="planned"
+                id="plannedMoney"
             >
                 $0.00
             </div>
 
         </div>
 
-
         <div class="card">
 
-            <div class="card-title">
+            <div class="cardTitle">
                 Actual Income
             </div>
 
             <div
                 class="big green"
-                id="actual"
+                id="actualMoney"
             >
                 $0.00
             </div>
 
         </div>
 
-
         <div class="card">
 
-            <div class="card-title">
+            <div class="cardTitle">
                 Business Goal
             </div>
 
             <div
                 class="big"
-                id="goal"
+                id="goalMoney"
             >
                 $0.00
             </div>
 
         </div>
 
-
         <div class="card">
 
-            <div class="card-title">
+            <div class="cardTitle">
                 Remaining
             </div>
 
             <div
                 class="big"
-                id="remaining"
+                id="remainingMoney"
             >
                 $0.00
             </div>
@@ -668,18 +754,18 @@ main{
 
         <div
             class="field"
-            style="margin-top:15px;"
+            style="margin-top:16px"
         >
 
             <label>
-                Your target
+                How much money do you want to make?
             </label>
 
             <input
                 id="goalInput"
                 type="number"
                 min="0"
-                step=".01"
+                step="0.01"
                 placeholder="1000"
             >
 
@@ -689,24 +775,23 @@ main{
             Save Goal
         </button>
 
-
         <div class="progress">
 
             <div
-                class="progress-bar"
-                id="progress"
+                class="progressBar"
+                id="progressBar"
             ></div>
 
         </div>
 
-        <div class="goal-info">
+        <div class="goalInfo">
 
-            <span id="percent">
+            <span id="goalPercent">
                 0% complete
             </span>
 
-            <span id="made">
-                $0 made
+            <span id="goalMade">
+                $0.00 made
             </span>
 
         </div>
@@ -724,31 +809,33 @@ main{
 >
 
     <div class="title">
-        Money Calendar
+        🗓️ Money Calendar
     </div>
 
     <div class="subtitle">
-        Tap any day to decide how much you plan to make.
+        Tap a date to set how much you plan to make.
     </div>
 
 
-    <div class="calendar-head">
+    <div class="calendarTop">
 
         <button
             class="secondary"
-            onclick="monthChange(-1)"
+            onclick="changeMonth(-1)"
         >
             ←
         </button>
 
         <div
-            class="month"
+            class="monthTitle"
             id="monthTitle"
-        ></div>
+        >
+            Month
+        </div>
 
         <button
             class="secondary"
-            onclick="monthChange(1)"
+            onclick="changeMonth(1)"
         >
             →
         </button>
@@ -776,23 +863,23 @@ main{
     </div>
 
     <div class="subtitle">
-        Your website's anonymous activity.
+        Anonymous website activity.
     </div>
 
 
-    <div class="live">
+    <div class="liveBox">
 
-        <div class="dot"></div>
+        <div class="liveDot"></div>
 
         <div>
 
-            <strong id="connection">
+            <strong id="firebaseStatus">
                 Connecting...
             </strong>
 
             <div
                 class="small"
-                id="lastUpdated"
+                id="updatedTime"
             >
                 Waiting for data
             </div>
@@ -806,61 +893,58 @@ main{
 
         <div class="card">
 
-            <div class="card-title">
+            <div class="cardTitle">
                 🔴 Concurrent Users
             </div>
 
             <div
                 class="big"
-                id="concurrent"
+                id="currentOnline"
             >
                 0
             </div>
 
         </div>
 
-
         <div class="card">
 
-            <div class="card-title">
+            <div class="cardTitle">
                 👥 Users This Week
             </div>
 
             <div
                 class="big"
-                id="weeklyUsers"
+                id="usersThisWeek"
             >
                 0
             </div>
 
         </div>
 
-
         <div class="card">
 
-            <div class="card-title">
-                🔄 Returned Users
+            <div class="cardTitle">
+                🔄 Returned From Last Week
             </div>
 
             <div
                 class="big"
-                id="returned"
+                id="returnedUsers"
             >
                 0
             </div>
 
         </div>
 
-
         <div class="card">
 
-            <div class="card-title">
-                📈 Retention
+            <div class="cardTitle">
+                📈 Weekly Retention
             </div>
 
             <div
                 class="big"
-                id="retention"
+                id="retentionRate"
             >
                 0%
             </div>
@@ -877,10 +961,10 @@ main{
         </h2>
 
         <div class="small">
-            Users online at the same time.
+            Maximum concurrent users recorded each day.
         </div>
 
-        <div class="chart-box">
+        <div class="chartBox">
             <canvas id="concurrentChart"></canvas>
         </div>
 
@@ -894,10 +978,10 @@ main{
         </h2>
 
         <div class="small">
-            Unique users active each day.
+            Unique active users for each day.
         </div>
 
-        <div class="chart-box">
+        <div class="chartBox">
             <canvas id="weeklyChart"></canvas>
         </div>
 
@@ -915,32 +999,34 @@ main{
     id="dateModal"
 >
 
-    <div class="modal-card">
+    <div class="modalCard">
 
         <button
             class="close"
-            onclick="closeModal()"
+            onclick="closeDateModal()"
         >
             ×
         </button>
 
         <h2
-            id="modalTitle"
-            style="margin-bottom:18px;"
-        ></h2>
+            id="selectedDateTitle"
+            style="margin-bottom:20px"
+        >
+            Date
+        </h2>
 
 
         <div class="field">
 
             <label>
-                How much will I make?
+                Planned income
             </label>
 
             <input
-                id="expected"
+                id="expectedInput"
                 type="number"
                 min="0"
-                step=".01"
+                step="0.01"
                 placeholder="0"
             >
 
@@ -950,29 +1036,29 @@ main{
         <div class="field">
 
             <label>
-                How much did I actually make?
+                Actual income
             </label>
 
             <input
                 id="actualInput"
                 type="number"
                 min="0"
-                step=".01"
+                step="0.01"
                 placeholder="0"
             >
 
         </div>
 
 
-        <div class="modal-buttons">
+        <div class="modalButtons">
 
-            <button onclick="saveDay()">
+            <button onclick="saveDate()">
                 Save
             </button>
 
             <button
                 class="secondary"
-                onclick="clearDay()"
+                onclick="clearDate()"
             >
                 Clear
             </button>
@@ -986,22 +1072,15 @@ main{
 
 <script>
 
-/* =========================================================
-   FIREBASE
-   ONLY USED FOR ANALYTICS
-========================================================= */
+/* ==========================================================
+   DATABASE
+========================================================== */
 
 const DATABASE_URL =
     "https://app-1-2f56b-default-rtdb.firebaseio.com/";
 
 
-let firebaseDatabase=null;
-
-
-/*
-   No Firebase API key.
-   No Firebase Authentication.
-*/
+let database = null;
 
 try{
 
@@ -1009,26 +1088,25 @@ try{
         databaseURL:DATABASE_URL
     });
 
-    firebaseDatabase =
-        firebase.database();
+    database = firebase.database();
 
 }catch(error){
 
     console.log(
-        "Firebase analytics unavailable",
+        "Firebase unavailable:",
         error
     );
 
 }
 
 
-/* =========================================================
-   ACCOUNT SYSTEM
-========================================================= */
+/* ==========================================================
+   ACCOUNT
+========================================================== */
 
-let username =
+let currentUsername =
     localStorage.getItem(
-        "businessUsername"
+        "business_current_username"
     );
 
 
@@ -1036,9 +1114,9 @@ const OWNER =
     "cheezlove22";
 
 
-function normalizeName(name){
+function cleanUsername(value){
 
-    return name
+    return value
         .trim()
         .toLowerCase()
         .replace(/[^a-z0-9_-]/g,"");
@@ -1046,81 +1124,88 @@ function normalizeName(name){
 }
 
 
-function showError(text){
+function showAuthError(message){
 
-    const box =
+    const error =
         document.getElementById(
             "authError"
         );
 
-    box.textContent=text;
+    error.textContent=message;
 
-    box.style.display =
-        text ? "block" : "none";
-
-}
-
-
-function authMode(mode){
-
-    showError("");
-
-
-    const login =
-        mode==="login";
-
-
-    document
-    .getElementById("loginForm")
-    .style.display =
-        login ? "block":"none";
-
-
-    document
-    .getElementById("createForm")
-    .style.display =
-        login ? "none":"block";
-
-
-    document
-    .getElementById("loginTab")
-    .classList.toggle(
-        "active",
-        login
-    );
-
-
-    document
-    .getElementById("createTab")
-    .classList.toggle(
-        "active",
-        !login
-    );
+    error.style.display =
+        message ? "block":"none";
 
 }
 
 
-/*
-   Accounts are local because there is no authentication
-   system in this version.
-*/
+function switchAuth(mode){
 
-function createLocalAccount(){
+    showAuthError("");
 
-    showError("");
+
+    const isContinue =
+        mode==="continue";
+
+
+    document
+    .getElementById(
+        "continueForm"
+    )
+    .style.display =
+        isContinue ? "block":"none";
+
+
+    document
+    .getElementById(
+        "newForm"
+    )
+    .style.display =
+        isContinue ? "none":"block";
+
+
+    document
+    .getElementById(
+        "continueTab"
+    )
+    .classList
+    .toggle(
+        "active",
+        isContinue
+    );
+
+
+    document
+    .getElementById(
+        "newTab"
+    )
+    .classList
+    .toggle(
+        "active",
+        !isContinue
+    );
+
+}
+
+
+function createAccount(){
+
+    showAuthError("");
 
 
     const name =
-        normalizeName(
+        cleanUsername(
             document
-            .getElementById("newUsername")
+            .getElementById(
+                "newUsername"
+            )
             .value
         );
 
 
-    if(name.length < 3){
+    if(name.length<3){
 
-        showError(
+        showAuthError(
             "Username must be at least 3 characters."
         );
 
@@ -1129,17 +1214,14 @@ function createLocalAccount(){
     }
 
 
-    /*
-       Save only the username.
-    */
+    currentUsername=name;
+
 
     localStorage.setItem(
-        "businessUsername",
-        name
+        "business_current_username",
+        currentUsername
     );
 
-
-    username=name;
 
     startApp();
 
@@ -1148,21 +1230,23 @@ function createLocalAccount(){
 
 function continueAccount(){
 
-    showError("");
+    showAuthError("");
 
 
     const name =
-        normalizeName(
+        cleanUsername(
             document
-            .getElementById("loginUsername")
+            .getElementById(
+                "continueUsername"
+            )
             .value
         );
 
 
-    if(name.length < 3){
+    if(name.length<3){
 
-        showError(
-            "Enter your username."
+        showAuthError(
+            "Enter a username."
         );
 
         return;
@@ -1170,13 +1254,14 @@ function continueAccount(){
     }
 
 
+    currentUsername=name;
+
+
     localStorage.setItem(
-        "businessUsername",
-        name
+        "business_current_username",
+        currentUsername
     );
 
-
-    username=name;
 
     startApp();
 
@@ -1186,7 +1271,7 @@ function continueAccount(){
 function logout(){
 
     localStorage.removeItem(
-        "businessUsername"
+        "business_current_username"
     );
 
     location.reload();
@@ -1194,30 +1279,108 @@ function logout(){
 }
 
 
-/* =========================================================
-   START APP
-========================================================= */
+/* ==========================================================
+   ACCOUNT-SPECIFIC LOCAL DATA
+========================================================== */
+
+function accountKey(){
+
+    return (
+        "business_data_"+currentUsername
+    );
+
+}
+
+
+function goalKey(){
+
+    return (
+        "business_goal_"+currentUsername
+    );
+
+}
+
+
+let moneyData={};
+
+let goal=0;
+
+
+function loadMoneyData(){
+
+    try{
+
+        moneyData =
+            JSON.parse(
+                localStorage.getItem(
+                    accountKey()
+                ) || "{}"
+            );
+
+    }catch{
+
+        moneyData={};
+
+    }
+
+
+    goal =
+        Number(
+            localStorage.getItem(
+                goalKey()
+            ) || 0
+        );
+
+}
+
+
+function saveMoneyData(){
+
+    localStorage.setItem(
+        accountKey(),
+        JSON.stringify(
+            moneyData
+        )
+    );
+
+
+    localStorage.setItem(
+        goalKey(),
+        goal
+    );
+
+}
+
+
+/* ==========================================================
+   APP START
+========================================================== */
 
 function startApp(){
 
     document
-    .getElementById("authScreen")
+    .getElementById(
+        "authScreen"
+    )
     .classList
     .add("hidden");
 
 
     document
-    .getElementById("currentUser")
+    .getElementById(
+        "headerUsername"
+    )
     .textContent =
-        "@"+username;
+        "@"+currentUsername;
 
 
     /*
-       Only the owner gets the analytics tab.
+       Analytics is visible only to
+       the requested owner username.
     */
 
     if(
-        username.toLowerCase()===
+        currentUsername.toLowerCase()===
         OWNER
     ){
 
@@ -1227,95 +1390,43 @@ function startApp(){
         )
         .style.display="block";
 
+    }else{
+
+        document
+        .getElementById(
+            "analyticsButton"
+        )
+        .style.display="none";
+
     }
 
 
-    loadMoney();
+    loadMoneyData();
 
     updateHome();
 
     renderCalendar();
 
-    recordAnalyticsPresence();
+    setupAnalytics();
 
 }
 
 
-if(username){
+if(currentUsername){
 
     startApp();
 
 }
 
 
-/* =========================================================
-   LOCAL BUSINESS DATA
-========================================================= */
-
-let moneyData={};
-
-let goalAmount=0;
-
-
-function storageName(){
-
-    return (
-        "business_"+username
-    );
-
-}
-
-
-function loadMoney(){
-
-    const saved =
-        localStorage.getItem(
-            storageName()
-        );
-
-
-    moneyData =
-        saved
-        ? JSON.parse(saved)
-        : {};
-
-
-    goalAmount =
-        Number(
-            localStorage.getItem(
-                storageName()+"_goal"
-            ) || 0
-        );
-
-}
-
-
-function saveMoney(){
-
-    localStorage.setItem(
-        storageName(),
-        JSON.stringify(
-            moneyData
-        )
-    );
-
-
-    localStorage.setItem(
-        storageName()+"_goal",
-        goalAmount
-    );
-
-}
-
-
-/* =========================================================
+/* ==========================================================
    HOME
-========================================================= */
+========================================================== */
 
-function dollars(number){
+function money(value){
 
     return "$"+
-        Number(number||0)
+        Number(value||0)
         .toLocaleString(
             "en-US",
             {
@@ -1329,6 +1440,9 @@ function dollars(number){
 
 function updateHome(){
 
+    loadMoneyData();
+
+
     let planned=0;
     let actual=0;
 
@@ -1336,109 +1450,191 @@ function updateHome(){
     Object.values(
         moneyData
     )
-    .forEach(item=>{
+    .forEach(day=>{
 
         planned +=
             Number(
-                item.expected||0
+                day.expected||0
             );
 
         actual +=
             Number(
-                item.actual||0
+                day.actual||0
             );
 
     });
 
 
     document
-    .getElementById("planned")
+    .getElementById(
+        "plannedMoney"
+    )
     .textContent =
-        dollars(planned);
+        money(planned);
 
 
     document
-    .getElementById("actual")
+    .getElementById(
+        "actualMoney"
+    )
     .textContent =
-        dollars(actual);
+        money(actual);
 
 
     document
-    .getElementById("goal")
+    .getElementById(
+        "goalMoney"
+    )
     .textContent =
-        dollars(goalAmount);
+        money(goal);
 
 
     document
-    .getElementById("remaining")
+    .getElementById(
+        "remainingMoney"
+    )
     .textContent =
-        dollars(
+        money(
             Math.max(
                 0,
-                goalAmount-actual
+                goal-actual
             )
         );
 
 
     document
-    .getElementById("goalInput")
+    .getElementById(
+        "goalInput"
+    )
     .value =
-        goalAmount || "";
+        goal || "";
 
 
-    const percentage =
-        goalAmount>0
+    const percent =
+        goal>0
         ? Math.min(
             100,
-            actual/goalAmount*100
+            actual/goal*100
         )
         : 0;
 
 
     document
-    .getElementById("progress")
+    .getElementById(
+        "progressBar"
+    )
     .style.width =
-        percentage+"%";
+        percent+"%";
 
 
     document
-    .getElementById("percent")
+    .getElementById(
+        "goalPercent"
+    )
     .textContent =
-        percentage.toFixed(1)+
+        percent.toFixed(1)+
         "% complete";
 
 
     document
-    .getElementById("made")
+    .getElementById(
+        "goalMade"
+    )
     .textContent =
-        dollars(actual)+" made";
+        money(actual)+" made";
 
 }
 
 
 function saveGoal(){
 
-    goalAmount =
+    goal =
         Number(
             document
-            .getElementById("goalInput")
+            .getElementById(
+                "goalInput"
+            )
             .value || 0
         );
 
 
-    saveMoney();
+    saveMoneyData();
 
     updateHome();
 
 }
 
 
-/* =========================================================
+/* ==========================================================
+   NAVIGATION
+========================================================== */
+
+function showPage(name){
+
+    if(
+        name==="analytics" &&
+        currentUsername.toLowerCase()!==OWNER
+    ){
+
+        name="home";
+
+    }
+
+
+    document
+    .querySelectorAll(".page")
+    .forEach(section=>{
+
+        section.classList.remove(
+            "active"
+        );
+
+    });
+
+
+    const page =
+        document.getElementById(name);
+
+
+    if(page){
+
+        page.classList.add("active");
+
+    }
+
+
+    if(name==="home"){
+
+        updateHome();
+
+    }
+
+
+    if(name==="calendar"){
+
+        loadMoneyData();
+
+        renderCalendar();
+
+    }
+
+
+    if(name==="analytics"){
+
+        loadAnalytics();
+
+    }
+
+}
+
+
+/* ==========================================================
    CALENDAR
-========================================================= */
+========================================================== */
 
 let calendarDate =
     new Date();
+
 
 let selectedDate=null;
 
@@ -1460,7 +1656,7 @@ function dateKey(date){
 }
 
 
-function monthChange(amount){
+function changeMonth(amount){
 
     calendarDate.setMonth(
         calendarDate.getMonth()+amount
@@ -1473,12 +1669,11 @@ function monthChange(amount){
 
 function renderCalendar(){
 
-    loadMoney();
+    loadMoneyData();
 
 
     const grid =
-        document
-        .getElementById(
+        document.getElementById(
             "calendarGrid"
         );
 
@@ -1488,6 +1683,7 @@ function renderCalendar(){
 
     const year =
         calendarDate.getFullYear();
+
 
     const month =
         calendarDate.getMonth();
@@ -1507,7 +1703,7 @@ function renderCalendar(){
         );
 
 
-    [
+    const weekdays=[
         "Sun",
         "Mon",
         "Tue",
@@ -1515,19 +1711,21 @@ function renderCalendar(){
         "Thu",
         "Fri",
         "Sat"
-    ]
-    .forEach(name=>{
+    ];
 
-        const element =
+
+    weekdays.forEach(name=>{
+
+        const cell =
             document.createElement(
                 "div"
             );
 
-        element.className="weekday";
+        cell.className="weekday";
 
-        element.textContent=name;
+        cell.textContent=name;
 
-        grid.appendChild(element);
+        grid.appendChild(cell);
 
     });
 
@@ -1540,7 +1738,7 @@ function renderCalendar(){
         ).getDay();
 
 
-    const days =
+    const totalDays =
         new Date(
             year,
             month+1,
@@ -1548,55 +1746,63 @@ function renderCalendar(){
         ).getDate();
 
 
+    /*
+       Blank cells before the first day.
+    */
+
     for(
         let i=0;
         i<firstDay;
         i++
     ){
 
-        const empty =
+        const blank =
             document.createElement(
                 "div"
             );
 
-        empty.className=
+        blank.className=
             "day empty";
 
-        grid.appendChild(empty);
+        grid.appendChild(blank);
 
     }
 
 
     const today =
-        dateKey(new Date());
+        dateKey(
+            new Date()
+        );
 
 
     for(
         let day=1;
-        day<=days;
+        day<=totalDays;
         day++
     ){
 
         const key =
             year+
             "-"+
-            String(month+1).padStart(2,"0")+
+            String(
+                month+1
+            ).padStart(2,"0")+
             "-"+
             String(day).padStart(2,"0");
 
 
-        const element =
+        const cell =
             document.createElement(
                 "div"
             );
 
 
-        element.className="day";
+        cell.className="day";
 
 
         if(key===today){
 
-            element.classList.add(
+            cell.classList.add(
                 "today"
             );
 
@@ -1608,12 +1814,16 @@ function renderCalendar(){
                 "div"
             );
 
+        number.className=
+            "dayNumber";
+
         number.textContent=day;
 
-        element.appendChild(number);
+
+        cell.appendChild(number);
 
 
-        const item =
+        const saved =
             moneyData[key] || {};
 
 
@@ -1623,60 +1833,70 @@ function renderCalendar(){
             );
 
         expected.className=
-            "day-money";
+            "dayMoney";
 
         expected.textContent =
-            dollars(
-                item.expected||0
+            money(
+                saved.expected||0
             );
 
-        element.appendChild(expected);
+
+        cell.appendChild(expected);
 
 
         if(
-            Number(item.actual||0)>0
+            Number(saved.actual||0)>0
         ){
 
-            const made =
+            const actual =
                 document.createElement(
                     "div"
                 );
 
-            made.className=
-                "day-actual";
+            actual.className=
+                "dayActual";
 
-            made.textContent =
+            actual.textContent =
                 "Made "+
-                dollars(item.actual);
+                money(saved.actual);
 
-            element.appendChild(made);
+
+            cell.appendChild(actual);
 
         }
 
 
-        element.onclick=()=>{
-            openDay(key);
+        cell.onclick=()=>{
+
+            openDate(key);
+
         };
 
 
-        grid.appendChild(element);
+        grid.appendChild(cell);
 
     }
 
 }
 
 
-function openDay(key){
+/* ==========================================================
+   DATE EDITOR
+========================================================== */
+
+function openDate(key){
 
     selectedDate=key;
 
 
-    const item =
+    const saved =
         moneyData[key] || {};
 
 
     document
-    .getElementById("modalTitle")
+    .getElementById(
+        "selectedDateTitle"
+    )
     .textContent =
         new Date(
             key+"T12:00:00"
@@ -1692,63 +1912,87 @@ function openDay(key){
 
 
     document
-    .getElementById("expected")
+    .getElementById(
+        "expectedInput"
+    )
     .value =
-        item.expected || "";
+        saved.expected || "";
 
 
     document
-    .getElementById("actualInput")
+    .getElementById(
+        "actualInput"
+    )
     .value =
-        item.actual || "";
+        saved.actual || "";
 
 
     document
-    .getElementById("dateModal")
+    .getElementById(
+        "dateModal"
+    )
     .classList
     .add("show");
 
 }
 
 
-function closeModal(){
+function closeDateModal(){
 
     document
-    .getElementById("dateModal")
+    .getElementById(
+        "dateModal"
+    )
     .classList
     .remove("show");
 
 }
 
 
-function saveDay(){
+function saveDate(){
 
     if(!selectedDate)
         return;
 
 
+    const expected =
+        Number(
+            document
+            .getElementById(
+                "expectedInput"
+            )
+            .value || 0
+        );
+
+
+    const actual =
+        Number(
+            document
+            .getElementById(
+                "actualInput"
+            )
+            .value || 0
+        );
+
+
     moneyData[selectedDate]={
 
-        expected:
-            Number(
-                document
-                .getElementById("expected")
-                .value || 0
-            ),
+        expected:Math.max(
+            0,
+            expected
+        ),
 
-        actual:
-            Number(
-                document
-                .getElementById("actualInput")
-                .value || 0
-            )
+        actual:Math.max(
+            0,
+            actual
+        )
 
     };
 
 
-    saveMoney();
+    saveMoneyData();
 
-    closeModal();
+    closeDateModal();
 
     renderCalendar();
 
@@ -1757,7 +2001,7 @@ function saveDay(){
 }
 
 
-function clearDay(){
+function clearDate(){
 
     if(!selectedDate)
         return;
@@ -1765,9 +2009,10 @@ function clearDay(){
 
     delete moneyData[selectedDate];
 
-    saveMoney();
 
-    closeModal();
+    saveMoneyData();
+
+    closeDateModal();
 
     renderCalendar();
 
@@ -1776,55 +2021,11 @@ function clearDay(){
 }
 
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function page(name){
-
-    if(
-        name==="analytics" &&
-        username.toLowerCase()!==OWNER
-    ){
-
-        name="home";
-
-    }
-
-
-    document
-    .querySelectorAll(".page")
-    .forEach(section=>{
-        section.classList.remove(
-            "active"
-        );
-    });
-
-
-    document
-    .getElementById(name)
-    .classList.add("active");
-
-
-    if(name==="home")
-        updateHome();
-
-
-    if(name==="calendar")
-        renderCalendar();
-
-
-    if(name==="analytics")
-        loadAnalytics();
-
-}
-
-
-/* =========================================================
+/* ==========================================================
    DARK MODE
-========================================================= */
+========================================================== */
 
-function darkMode(){
+function toggleDark(){
 
     document
     .body
@@ -1833,10 +2034,11 @@ function darkMode(){
 
 
     localStorage.setItem(
-        "businessDark",
-        document.body.classList.contains(
-            "dark"
-        )
+        "business_dark_mode",
+        document
+        .body
+        .classList
+        .contains("dark")
     );
 
 }
@@ -1844,7 +2046,7 @@ function darkMode(){
 
 if(
     localStorage.getItem(
-        "businessDark"
+        "business_dark_mode"
     )==="true"
 ){
 
@@ -1856,106 +2058,142 @@ if(
 }
 
 
-/* =========================================================
-   ANALYTICS
-========================================================= */
+/* ==========================================================
+   ANONYMOUS ANALYTICS ID
+========================================================== */
 
-/*
-   The database is ONLY for these analytics.
-
-   analytics/
-      daily/
-         YYYY-MM-DD/
-            concurrent
-            users
-
-   presence/
-      anonymousUserID/
-         online
-         lastSeen
-
-   users/
-      anonymousUserID/
-         firstSeen
-         lastSeen
-         activity/
-            YYYY-MM-DD
-*/
-
-
-let anonymousID =
+let visitorID =
     localStorage.getItem(
-        "anonymousAnalyticsID"
+        "business_visitor_id"
     );
 
 
-if(!anonymousID){
+if(!visitorID){
 
-    anonymousID =
-        "u_"+
+    if(
+        window.crypto &&
+        crypto.randomUUID
+    ){
 
-        Math.random()
-        .toString(36)
-        .substring(2)+
+        visitorID =
+            crypto.randomUUID();
 
-        Date.now();
+    }else{
+
+        visitorID =
+            "visitor_"+
+
+            Math.random()
+            .toString(36)
+            .substring(2)+
+
+            Date.now();
+
+    }
+
 
     localStorage.setItem(
-        "anonymousAnalyticsID",
-        anonymousID
+        "business_visitor_id",
+        visitorID
     );
 
 }
 
 
-/*
-   This records this browser as online.
+/* ==========================================================
+   ANALYTICS TRACKING
+========================================================== */
 
-   No name.
-   No email.
-   No password.
-*/
+async function setupAnalytics(){
 
-async function recordAnalyticsPresence(){
-
-    if(!firebaseDatabase)
+    if(!database)
         return;
-
-
-    const today =
-        dateKey(new Date());
 
 
     try{
 
-        await firebaseDatabase
-        .ref(
-            "presence/"+anonymousID
-        )
-        .set({
+        const presence =
+            database.ref(
+                "analytics/presence/"+
+                visitorID
+            );
+
+
+        await presence.set({
 
             online:true,
 
             lastSeen:
-                firebase.database
+                firebase
+                .database
                 .ServerValue
                 .TIMESTAMP
 
         });
 
 
-        await firebaseDatabase
+        /*
+           Firebase marks this browser offline
+           when the connection disappears.
+        */
+
+        presence
+        .onDisconnect()
+        .update({
+
+            online:false,
+
+            lastSeen:
+                firebase
+                .database
+                .ServerValue
+                .TIMESTAMP
+
+        });
+
+
+        await recordDailyActivity();
+
+    }catch(error){
+
+        console.log(
+            "Analytics setup error:",
+            error
+        );
+
+    }
+
+}
+
+
+async function recordDailyActivity(){
+
+    if(!database)
+        return;
+
+
+    const today =
+        dateKey(
+            new Date()
+        );
+
+
+    try{
+
+        await database
         .ref(
-            "users/"+anonymousID+
-            "/activity/"+today
+            "analytics/users/"+
+            visitorID+
+            "/activity/"+
+            today
         )
         .set(true);
 
 
         const userRef =
-            firebaseDatabase
-            .ref(
-                "users/"+anonymousID
+            database.ref(
+                "analytics/users/"+
+                visitorID
             );
 
 
@@ -1970,24 +2208,30 @@ async function recordAnalyticsPresence(){
             await userRef.set({
 
                 firstSeen:
-                    firebase.database
+                    firebase
+                    .database
                     .ServerValue
                     .TIMESTAMP,
 
                 lastSeen:
-                    firebase.database
+                    firebase
+                    .database
                     .ServerValue
-                    .TIMESTAMP
+                    .TIMESTAMP,
+
+                activity:{
+                    [today]:true
+                }
 
             });
 
         }else{
 
-            await userRef
-            .update({
+            await userRef.update({
 
                 lastSeen:
-                    firebase.database
+                    firebase
+                    .database
                     .ServerValue
                     .TIMESTAMP
 
@@ -1996,25 +2240,14 @@ async function recordAnalyticsPresence(){
         }
 
 
-        /*
-           Firebase automatically changes
-           online to false if this browser
-           disconnects.
-        */
+        await updateDailyUserCount(today);
 
-        firebaseDatabase
-        .ref(
-            "presence/"+anonymousID+
-            "/online"
-        )
-        .onDisconnect()
-        .set(false);
-
+        await updateConcurrentCount(today);
 
     }catch(error){
 
         console.log(
-            "Analytics error:",
+            "Daily analytics error:",
             error
         );
 
@@ -2024,148 +2257,82 @@ async function recordAnalyticsPresence(){
 
 
 /*
-   Keep presence alive.
+   Count unique users for today's chart.
 */
 
-setInterval(
-    recordAnalyticsPresence,
-    15000
-);
-
-
-/* =========================================================
-   ANALYTICS LOAD
-========================================================= */
-
-let concurrentChart=null;
-let weeklyChart=null;
-
-
-function mondayOfWeek(offset){
-
-    const now =
-        new Date();
-
-
-    const day =
-        now.getDay();
-
-
-    const monday =
-        new Date(now);
-
-
-    monday.setDate(
-        now.getDate()-
-        (day===0 ? 6 : day-1)+
-        offset*7
-    );
-
-
-    monday.setHours(
-        0,0,0,0
-    );
-
-
-    return monday;
-
-}
-
-
-function weekDays(offset){
-
-    const monday =
-        mondayOfWeek(offset);
-
-
-    const result=[];
-
-
-    for(
-        let i=0;
-        i<7;
-        i++
-    ){
-
-        const day =
-            new Date(monday);
-
-
-        day.setDate(
-            monday.getDate()+i
-        );
-
-
-        result.push(day);
-
-    }
-
-
-    return result;
-
-}
-
-
-async function loadAnalytics(){
-
-    if(
-        username.toLowerCase()!==OWNER
-    ){
-
-        return;
-
-    }
-
-
-    if(!firebaseDatabase){
-
-        document
-        .getElementById("connection")
-        .textContent =
-            "Database unavailable";
-
-        return;
-
-    }
-
+async function updateDailyUserCount(today){
 
     try{
 
-        const [
-            presenceSnapshot,
-            usersSnapshot,
-            dailySnapshot
-        ] =
-        await Promise.all([
+        const snapshot =
+            await database
+            .ref(
+                "analytics/users"
+            )
+            .once("value");
 
-            firebaseDatabase
-            .ref("presence")
-            .once("value"),
 
-            firebaseDatabase
-            .ref("users")
-            .once("value"),
+        const allUsers =
+            snapshot.val() || {};
 
-            firebaseDatabase
-            .ref("analytics/daily")
-            .once("value")
 
-        ]);
+        let count=0;
+
+
+        Object.values(
+            allUsers
+        )
+        .forEach(user=>{
+
+            if(
+                user &&
+                user.activity &&
+                user.activity[today]
+            ){
+
+                count++;
+
+            }
+
+        });
+
+
+        await database
+        .ref(
+            "analytics/daily/"+
+            today+
+            "/activeUsers"
+        )
+        .set(count);
+
+    }catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+
+/*
+   Find how many browsers are currently online
+   and save today's maximum.
+*/
+
+async function updateConcurrentCount(today){
+
+    try{
+
+        const snapshot =
+            await database
+            .ref(
+                "analytics/presence"
+            )
+            .once("value");
 
 
         const presence =
-            presenceSnapshot.val()
-            || {};
-
-
-        const users =
-            usersSnapshot.val()
-            || {};
-
-
-        const daily =
-            dailySnapshot.val()
-            || {};
+            snapshot.val() || {};
 
 
         let online=0;
@@ -2188,13 +2355,250 @@ async function loadAnalytics(){
         });
 
 
+        const maxRef =
+            database.ref(
+                "analytics/daily/"+
+                today+
+                "/concurrent"
+            );
+
+
+        const maxSnapshot =
+            await maxRef.once(
+                "value"
+            );
+
+
+        const oldMax =
+            Number(
+                maxSnapshot.val() || 0
+            );
+
+
+        if(online>oldMax){
+
+            await maxRef.set(
+                online
+            );
+
+        }
+
+    }catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+
+/*
+   Heartbeat every 15 seconds.
+*/
+
+setInterval(
+    async()=>{
+        
+        if(!database)
+            return;
+
+        try{
+
+            await database
+            .ref(
+                "analytics/presence/"+
+                visitorID
+            )
+            .update({
+
+                online:true,
+
+                lastSeen:
+                    firebase
+                    .database
+                    .ServerValue
+                    .TIMESTAMP
+
+            });
+
+            await recordDailyActivity();
+
+        }catch(error){
+
+            console.log(error);
+
+        }
+
+    },
+    15000
+);
+
+
+/* ==========================================================
+   ANALYTICS DASHBOARD
+========================================================== */
+
+let concurrentChart=null;
+
+let weeklyChart=null;
+
+
+function getWeekDates(offset){
+
+    const now =
+        new Date();
+
+
+    const day =
+        now.getDay();
+
+
+    const monday =
+        new Date(now);
+
+
+    monday.setDate(
+        now.getDate()-
+        (day===0 ? 6 : day-1)+
+        offset*7
+    );
+
+
+    monday.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const days=[];
+
+
+    for(
+        let i=0;
+        i<7;
+        i++
+    ){
+
+        const d =
+            new Date(monday);
+
+
+        d.setDate(
+            monday.getDate()+i
+        );
+
+
+        days.push(d);
+
+    }
+
+
+    return days;
+
+}
+
+
+async function loadAnalytics(){
+
+    if(
+        !currentUsername ||
+        currentUsername.toLowerCase()!==OWNER
+    ){
+
+        return;
+
+    }
+
+
+    if(!database){
+
+        document
+        .getElementById(
+            "firebaseStatus"
+        )
+        .textContent=
+            "Database unavailable";
+
+        return;
+
+    }
+
+
+    try{
+
+        const [
+            presenceSnap,
+            usersSnap,
+            dailySnap
+        ] =
+        await Promise.all([
+
+            database
+            .ref(
+                "analytics/presence"
+            )
+            .once("value"),
+
+            database
+            .ref(
+                "analytics/users"
+            )
+            .once("value"),
+
+            database
+            .ref(
+                "analytics/daily"
+            )
+            .once("value")
+
+        ]);
+
+
+        const presence =
+            presenceSnap.val() || {};
+
+
+        const users =
+            usersSnap.val() || {};
+
+
+        const daily =
+            dailySnap.val() || {};
+
+
+        /* CURRENT ONLINE */
+
+        let online=0;
+
+
+        Object.values(
+            presence
+        )
+        .forEach(user=>{
+
+            if(
+                user &&
+                user.online===true
+            ){
+
+                online++;
+
+            }
+
+        });
+
+
+        /* WEEKS */
+
         const thisWeek =
-            weekDays(0)
+            getWeekDates(0)
             .map(dateKey);
 
 
         const lastWeek =
-            weekDays(-1)
+            getWeekDates(-1)
             .map(dateKey);
 
 
@@ -2247,6 +2651,8 @@ async function loadAnalytics(){
         );
 
 
+        /* RETURNED USERS */
+
         let returned=0;
 
 
@@ -2264,7 +2670,7 @@ async function loadAnalytics(){
 
 
         const retention =
-            previousUsers.size
+            previousUsers.size>0
             ? returned/
               previousUsers.size*
               100
@@ -2272,43 +2678,54 @@ async function loadAnalytics(){
 
 
         document
-        .getElementById("concurrent")
+        .getElementById(
+            "currentOnline"
+        )
         .textContent=online;
 
 
         document
-        .getElementById("weeklyUsers")
+        .getElementById(
+            "usersThisWeek"
+        )
         .textContent=
             currentUsers.size;
 
 
         document
-        .getElementById("returned")
-        .textContent=
-            returned;
+        .getElementById(
+            "returnedUsers"
+        )
+        .textContent=returned;
 
 
         document
-        .getElementById("retention")
+        .getElementById(
+            "retentionRate"
+        )
         .textContent=
             retention.toFixed(1)+"%";
 
 
         document
-        .getElementById("connection")
+        .getElementById(
+            "firebaseStatus"
+        )
         .textContent=
             "Analytics connected";
 
 
         document
-        .getElementById("lastUpdated")
+        .getElementById(
+            "updatedTime"
+        )
         .textContent=
             "Updated "+
             new Date()
             .toLocaleTimeString();
 
 
-        drawAnalytics(
+        drawCharts(
             daily
         );
 
@@ -2318,28 +2735,30 @@ async function loadAnalytics(){
         console.error(error);
 
         document
-        .getElementById("connection")
+        .getElementById(
+            "firebaseStatus"
+        )
         .textContent=
-            "Could not load analytics";
+            "Analytics error";
 
     }
 
 }
 
 
-/* =========================================================
-   ANALYTICS CHARTS
-========================================================= */
+/* ==========================================================
+   CHARTS
+========================================================== */
 
-function drawAnalytics(daily){
+function drawCharts(daily){
 
-    const days =
-        weekDays(0);
+    const dates =
+        getWeekDates(0);
 
 
     const labels =
-        days.map(day=>
-            day.toLocaleDateString(
+        dates.map(date=>
+            date.toLocaleDateString(
                 "en-US",
                 {
                     weekday:"short"
@@ -2349,15 +2768,13 @@ function drawAnalytics(daily){
 
 
     const keys =
-        days.map(dateKey);
+        dates.map(dateKey);
 
 
     const concurrent =
         keys.map(key=>
             Number(
-                daily[key]?.concurrent ||
-                daily[key]?.maxConcurrent ||
-                0
+                daily[key]?.concurrent || 0
             )
         );
 
@@ -2365,27 +2782,33 @@ function drawAnalytics(daily){
     const active =
         keys.map(key=>
             Number(
-                daily[key]?.activeUsers ||
-                daily[key]?.users ||
-                0
+                daily[key]?.activeUsers || 0
             )
         );
 
 
-    if(concurrentChart)
+    if(concurrentChart){
+
         concurrentChart.destroy();
 
+    }
 
-    if(weeklyChart)
+
+    if(weeklyChart){
+
         weeklyChart.destroy();
+
+    }
 
 
     concurrentChart =
         new Chart(
+
             document
             .getElementById(
                 "concurrentChart"
             ),
+
             {
 
                 type:"line",
@@ -2397,7 +2820,7 @@ function drawAnalytics(daily){
                     datasets:[{
 
                         label:
-                            "Concurrent Users",
+                            "Max Concurrent Users",
 
                         data:concurrent,
 
@@ -2418,15 +2841,18 @@ function drawAnalytics(daily){
                 }
 
             }
+
         );
 
 
     weeklyChart =
         new Chart(
+
             document
             .getElementById(
                 "weeklyChart"
             ),
+
             {
 
                 type:"bar",
@@ -2438,7 +2864,7 @@ function drawAnalytics(daily){
                     datasets:[{
 
                         label:
-                            "Active Users",
+                            "Unique Active Users",
 
                         data:active
 
@@ -2455,22 +2881,25 @@ function drawAnalytics(daily){
                 }
 
             }
+
         );
 
 }
 
 
 /*
-   Refresh owner analytics every 5 seconds.
+   Keep analytics dashboard fresh.
 */
 
 setInterval(()=>{
 
     if(
-        username &&
-        username.toLowerCase()===OWNER &&
+        currentUsername &&
+        currentUsername.toLowerCase()===OWNER &&
         document
-        .getElementById("analytics")
+        .getElementById(
+            "analytics"
+        )
         .classList
         .contains("active")
     ){
